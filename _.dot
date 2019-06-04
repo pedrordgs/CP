@@ -1,0 +1,13 @@
+digraph G {
+    /* edge [label=0]; */
+    graph [ranksep=0.5];
+    root_0 [shape=record, label="{{root}}"];
+    d1_3 [shape=record, label="{{d1}}"];
+    d1_4 [shape=record, label="{{d1}}"];
+    d1_1 [shape=record, label="{{d1}}"];
+    d1_2 [shape=record, label="{{d1}}"];
+    d1_3 -> d1_4;
+    d1_1 -> d1_2;
+    root_0 -> d1_3;
+    root_0 -> d1_1;
+}

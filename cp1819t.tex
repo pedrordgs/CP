@@ -1896,16 +1896,22 @@ outras funções auxiliares que sejam necessárias.
 \>[7]{}\mathbf{where}{}\<[E]%
 \\
 \>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{g}\;(\Conid{H})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{max}\;\Varid{y}\;\Varid{b}){}\<[E]%
+\>[9]{}\Varid{g}\;(\Conid{H})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{max}\;\Varid{y}\;(\Varid{b}\mathbin{+}\Varid{y}\mathbin{/}\mathrm{2})){}\<[E]%
 \\
 \>[7]{}\hsindent{2}{}\<[9]%
 \>[9]{}\Varid{g}\;(\Conid{Hb})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{max}\;\Varid{y}\;\Varid{b}){}\<[E]%
 \\
 \>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{g}\;(\Conid{Ht})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{max}\;\Varid{y}\;\Varid{b}){}\<[E]%
+\>[9]{}\Varid{g}\;(\Conid{Ht})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{max}\;\Varid{y}\;(\Varid{b}\mathbin{+}\Varid{y})){}\<[E]%
 \\
 \>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{g}\;\Varid{t}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{max}\;\Varid{x}\;\Varid{a},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
+\>[9]{}\Varid{g}\;(\Conid{V})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{max}\;\Varid{x}\;(\Varid{a}\mathbin{+}\Varid{x}\mathbin{/}\mathrm{2}),\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{g}\;(\Conid{Ve})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{max}\;\Varid{x}\;\Varid{a},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{g}\;(\Conid{Vd})\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{max}\;\Varid{x}\;(\Varid{a}\mathbin{+}\Varid{x}),\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
 \\
 \>[7]{}\hsindent{2}{}\<[9]%
 \>[9]{}\Varid{f}\;(\Varid{x},\Varid{y})\mathrel{=}(\Varid{fromIntegral}\;\Varid{x},\Varid{fromIntegral}\;\Varid{y}){}\<[E]%
@@ -1918,52 +1924,24 @@ outras funções auxiliares que sejam necessárias.
 \>[11]{}\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{f}\mathbin{::}((\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}),\Conid{Origem})\to (\Conid{Caixa},\Conid{Origem})+((),(((\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}),\Conid{Origem}),((\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}),\Conid{Origem}))){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
 \>[11]{}\Varid{f}\;(\Conid{Unid}\;\Varid{a},\Varid{c})\mathrel{=}i_1\;(\Varid{a},\Varid{c}){}\<[E]%
 \\
 \>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{f}\;(\Conid{Comp}\;\Varid{t}\;\Varid{a}\;\Varid{b},\Varid{c})\mathrel{=}i_2\;((),((\Varid{a},\Varid{c}),(\Varid{b},\Varid{calc}\;\Varid{t}\;\Varid{c}\;(\Varid{h}\;\Varid{t}\;\Varid{a}\;\Varid{b})))){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{g}\;\Conid{H}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x},\Varid{y}\mathbin{/}\mathrm{2}\mathbin{-}\Varid{b}\mathbin{/}\mathrm{2}){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{g}\;\Conid{Ht}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x},\Varid{y}\mathbin{-}\Varid{b}){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{g}\;\Conid{Hb}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x},\mathrm{0}){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{g}\;\Conid{V}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{/}\mathrm{2}\mathbin{-}\Varid{a}\mathbin{/}\mathrm{2},\Varid{y}){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{g}\;\Conid{Vd}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{-}\Varid{a},\Varid{y}){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{g}\;\Conid{Ve}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\mathrm{0},\Varid{y}){}\<[E]%
-\\
-\>[B]{}\hsindent{11}{}\<[11]%
-\>[11]{}\Varid{h}\;\Varid{t}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{g}\;\Varid{t}\;(\Varid{dimen}\;\Varid{a})\;(\Varid{dimen}\;\Varid{b}){}\<[E]%
+\>[11]{}\Varid{f}\;(\Conid{Comp}\;\Varid{t}\;\Varid{a}\;\Varid{b},\Varid{c})\mathrel{=}i_2\;((),((\Varid{a},\Varid{c}),(\Varid{b},\Varid{calc}\;\Varid{t}\;\Varid{c}\;(\Varid{dimen}\;\Varid{a})))){}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{calc}\mathbin{::}\Conid{Tipo}\to \Conid{Origem}\to (\Conid{Float},\Conid{Float})\to \Conid{Origem}{}\<[E]%
 \\
-\>[B]{}\Varid{calc}\;\anonymous \;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\mbox{\onelinecomment calc :: Tipo -> Origem -> (Float, Float) -> Origem}{}\<[E]%
+\>[B]{}\Varid{calc}\;\Conid{H}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{y}\mathbin{+}\Varid{b}\mathbin{/}\mathrm{2}){}\<[E]%
 \\
-\>[B]{}\mbox{\onelinecomment calc H (x,y) (a,b) =}{}\<[E]%
+\>[B]{}\Varid{calc}\;\Conid{Ht}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
 \\
-\>[B]{}\mbox{\onelinecomment calc Hb (x,y) (a,b) =}{}\<[E]%
+\>[B]{}\Varid{calc}\;\Conid{Hb}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{y}){}\<[E]%
 \\
-\>[B]{}\mbox{\onelinecomment calc Ht (x,y) (a,b) =}{}\<[E]%
+\>[B]{}\Varid{calc}\;\Conid{V}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a}\mathbin{/}\mathrm{2},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
 \\
-\>[B]{}\mbox{\onelinecomment calc V (x,y) (a,b) =}{}\<[E]%
+\>[B]{}\Varid{calc}\;\Conid{Vd}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
 \\
-\>[B]{}\mbox{\onelinecomment calc Vd (x,y) (a,b) =}{}\<[E]%
-\\
-\>[B]{}\mbox{\onelinecomment calc Ve (x,y) (a,b) =}{}\<[E]%
+\>[B]{}\Varid{calc}\;\Conid{Ve}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{agrup\char95 caixas}\mathbin{::}\Conid{X}\;(\Conid{Caixa},\Conid{Origem})\;()\to \Conid{Fig}{}\<[E]%
 \\
@@ -2010,50 +1988,160 @@ Triologia ``ana-cata-hilo":
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{outFS}\;(\Conid{FS}\;\Varid{l})\mathrel{=}\bot {}\<[E]%
-\\
-\>[B]{}\Varid{outNode}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{outFS}\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{id}\times\Varid{outNode})\;\Varid{l}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{baseFS}\;\Varid{f}\;\Varid{g}\;\Varid{h}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{outNode}\;(\Conid{File}\;\Varid{b})\mathrel{=}i_1\;\Varid{b}{}\<[E]%
+\\
+\>[B]{}\Varid{outNode}\;(\Conid{Dir}\;\Varid{a})\mathrel{=}i_2\;\Varid{a}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{baseFS}\;\Varid{f}\;\Varid{g}\;\Varid{h}\mathrel{=}\map \;(\Varid{f}\times(\Varid{g}+\Varid{h})){}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{cataFS}\mathbin{::}([\mskip1.5mu (\Varid{a},\Varid{b}+\Varid{c})\mskip1.5mu]\to \Varid{c})\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Varid{c}{}\<[E]%
 \\
-\>[B]{}\Varid{cataFS}\;\Varid{g}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{cataFS}\;\Varid{g}\mathrel{=}\Varid{g}\comp \Varid{recFS}\;(\Varid{cataFS}\;\Varid{g})\comp \Varid{outFS}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{anaFS}\mathbin{::}(\Varid{c}\to [\mskip1.5mu (\Varid{a},\Varid{b}+\Varid{c})\mskip1.5mu])\to \Varid{c}\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
-\>[B]{}\Varid{anaFS}\;\Varid{g}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{anaFS}\;\Varid{g}\mathrel{=}\Varid{inFS}\comp (\Varid{recFS}\;(\Varid{anaFS}\;\Varid{g}))\comp \Varid{g}{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{hyloFS}\;\Varid{g}\;\Varid{h}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{hyloFS}\;\Varid{g}\;\Varid{h}\mathrel{=}\Varid{cataFS}\;\Varid{h}\comp \Varid{anaFS}\;\Varid{g}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 Outras funções pedidas:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{check}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Conid{Bool}{}\<[E]%
 \\
-\>[B]{}\Varid{check}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{check}\mathrel{=}\Varid{cataFS}\mathbin{\$}\uncurry{(\mathrel{\wedge})}\comp (\Varid{nr}\times\Varid{and})\comp \conj{\map \;\p1}{\map \;(\alt{\Varid{true}}{\Varid{id}}\comp \p2)}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{tar}\mathbin{::}\Conid{FS}\;\Varid{a}\;\Varid{b}\to [\mskip1.5mu (\Conid{Path}\;\Varid{a},\Varid{b})\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\Varid{tar}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{tar}\mathrel{=}\Varid{cataFS}\mathbin{\$}\Varid{concat}\comp (\map \;\Varid{caminhos}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{caminhos}\;(\Varid{a},i_2\;\Varid{p})\mathrel{=}{}\<[33]%
+\>[33]{}\map \;((\Varid{curry}\;\Varid{cons}\;\Varid{a})\times\Varid{id})\;\Varid{p}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{caminhos}\;(\Varid{a},i_1\;\Varid{f})\mathrel{=}[\mskip1.5mu ([\mskip1.5mu \Varid{a}\mskip1.5mu],\Varid{f})\mskip1.5mu]{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{untar}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu (\Conid{Path}\;\Varid{a},\Varid{b})\mskip1.5mu]\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
-\>[B]{}\Varid{untar}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{untar}\mathrel{=}\Varid{joinDupDirs}\comp \Varid{anaFS}\;(\map \;\Varid{travessia}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{travessia}\;(\Varid{a},\Varid{b})\mathrel{=}\mathbf{if}\;\length \;\Varid{a}\mathbin{>}\mathrm{1}\;\mathbf{then}\;(\Varid{head}\;\Varid{a},i_2\;[\mskip1.5mu (\Varid{tail}\;\Varid{a},\Varid{b})\mskip1.5mu])\;\mathbf{else}\;(\Varid{head}\;\Varid{a},i_1\;\Varid{b}){}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{find}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to [\mskip1.5mu \Conid{Path}\;\Varid{a}\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\Varid{find}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{find}\mathrel{=}\Varid{curry}\mathbin{\$}\Varid{hyloFS}\;\Varid{filtraFS}\;\Varid{paths}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{filtraFS}\;(\Varid{a},\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{transform}\;\Varid{a})\mathbin{\$}\Varid{filter}\;(\Varid{checkID}\;\Varid{a})\;\Varid{l}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{checkID}\;\Varid{n}\;(\Varid{a},\Varid{f})\mathrel{=}\Varid{a}\equiv \Varid{n}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{transform}\;\Varid{n}\;(\Varid{a},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{a},i_1\;\Varid{f}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{transform}\;\Varid{n}\;(\Varid{a},\Conid{Dir}\;\Varid{d})\mathrel{=}(\Varid{a},i_2\;(\Varid{a},\Varid{d})){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{paths}\mathrel{=}\Varid{concat}\comp \map \;(\Varid{organize}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{organize}\;(\Varid{a},i_1\;\Varid{f})\mathrel{=}[\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{organize}\;(\Varid{a},i_2\;\Varid{p})\mathrel{=}\map \;((\Varid{curry}\;\Varid{cons}\;\Varid{a}))\;\Varid{p}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{new}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Path}\;\Varid{a}\to \Varid{b}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
-\>[B]{}\Varid{new}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{new}\mathrel{=}\Varid{curry}\comp \Varid{curry}\mathbin{\$}{}\<[24]%
+\>[24]{}\Varid{anaFS}\mathbin{\$}\Varid{f}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{f}{}\<[12]%
+\>[12]{}\mathrel{=}\Varid{cond}\;\Varid{maior}\;(\uncurry{\cdot }\mathbin{\$}\Varid{goForward})\;(\Varid{cond}\;\Varid{igual}\;(\uncurry{\cdot }\mathbin{\$}\Varid{newFile})\;(\uncurry{\cdot }\mathbin{\$}\Varid{notHere})){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{goForward}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{progresso}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{progresso}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{i},i_1\;\Varid{f}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{progresso}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{Dir}\;\Varid{d})\mathrel{=}\mathbf{if}\;(\Varid{head}\;\Varid{a}\equiv \Varid{i})\;\mathbf{then}\;(\Varid{i},i_2\;((\Varid{tail}\;\Varid{a},\Varid{b}),\Varid{d}))\;\mathbf{else}\;(\Varid{i},i_2\;(([\mskip1.5mu \mskip1.5mu],\Varid{b}),\Varid{d})){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{newFile}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}(\Varid{curry}\;\mathsf{conc})\;[\mskip1.5mu (\Varid{head}\;\Varid{a},i_1\;\Varid{b})\mskip1.5mu]\mathbin{\$}\map \;(\Varid{endOfPath}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{notHere}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{endOfPath}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{endOfPath}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{i},i_1\;\Varid{f}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{endOfPath}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{Dir}\;\Varid{d})\mathrel{=}(\Varid{i},i_2\;(([\mskip1.5mu \mskip1.5mu],\Varid{b}),\Varid{d})){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{maior}\mathrel{=}(\mathbin{>}\mathrm{1})\comp \length \comp \p1\comp \p1{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{igual}\mathrel{=}(\equiv \mathrm{1})\comp \length \comp \p1\comp \p1{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{cp}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Path}\;\Varid{a}\to \Conid{Path}\;\Varid{a}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
-\>[B]{}\Varid{cp}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{cp}\mathrel{=}{}\<[7]%
+\>[7]{}\Varid{curry}\comp \Varid{curry}\mathbin{\$}\Varid{f}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\mathbf{where}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{f}\;((\Varid{a},\Varid{b}),\Varid{fs})\mathrel{=}\Varid{copiaFich}\;\Varid{a}\;\Varid{fs}\;(\Varid{conteudo}\;(\Varid{a},\Varid{fs})){}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{copiaFich}\;\Varid{a}\;\Varid{fs}\;(\Conid{FS}\;\Varid{l})\mathrel{=}\mathbf{if}\;\length \;\Varid{l}\mathbin{>}\mathrm{0}\;\mathbf{then}\;\Varid{new}\;\Varid{a}\;((\lambda (\Conid{File}\;\Varid{b})\to \Varid{b})\comp \p2\mathbin{\$}\Varid{head}\;\Varid{l})\;\Varid{fs}\;\mathbf{else}\;\Varid{fs}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{conteudo}\mathrel{=}\Varid{anaFS}\;\Varid{g}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{g}\mathrel{=}\Varid{cond}\;((\geq \mathrm{1})\comp \length \comp \p1)\;(\uncurry{\cdot }\mathbin{\$}\Varid{followPath})\;\Varid{nil}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{followPath}\;\Varid{a}\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{transf}\;\Varid{a})\mathbin{\$}\Varid{filter}\;(\Varid{path}\;\Varid{a})\;\Varid{l}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{path}\;\Varid{p}\;(\Varid{a},\Varid{x})\mathrel{=}\Varid{head}\;\Varid{p}\equiv \Varid{a}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{transf}\;\Varid{p}\;(\Varid{a},\Conid{File}\;\Varid{b})\mathrel{=}(\Varid{a},i_1\;\Varid{b}){}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{transf}\;\Varid{p}\;(\Varid{a},\Conid{Dir}\;\Varid{fs})\mathrel{=}(\Varid{a},i_2\;(\Varid{tail}\;\Varid{p},\Varid{fs})){}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{rm}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow (\Conid{Path}\;\Varid{a})\to (\Conid{FS}\;\Varid{a}\;\Varid{b})\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
@@ -2065,7 +2153,19 @@ Outras funções pedidas:
 \\[\blanklineskip]%
 \>[B]{}\Varid{cFS2Exp}\mathbin{::}\Varid{a}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to (\Conid{Exp}\;()\;\Varid{a}){}\<[E]%
 \\
-\>[B]{}\Varid{cFS2Exp}\mathrel{=}\bot {}\<[E]%
+\>[B]{}\Varid{cFS2Exp}\mathrel{=}\Varid{curry}\mathbin{\$}\Varid{anaExp}\;\Varid{g}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{g}\;(\Varid{a},\Conid{FS}\;\Varid{l})\mathrel{=}i_2\;(\Varid{a},\map \;(\Varid{leitura})\;\Varid{l}){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{leitura}\;(\Varid{a},\Conid{File}\;\Varid{b})\mathrel{=}(\Varid{a},\Conid{FS}\;[\mskip1.5mu \mskip1.5mu]){}\<[E]%
+\\
+\>[B]{}\hsindent{9}{}\<[9]%
+\>[9]{}\Varid{leitura}\;(\Varid{a},\Conid{Dir}\;\Varid{fs})\mathrel{=}(\Varid{a},\Varid{fs}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 

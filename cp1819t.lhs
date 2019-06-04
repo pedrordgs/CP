@@ -1183,10 +1183,12 @@ collectLeafs = cataL2D (either singl (uncurry f))
 dimen :: X Caixa Tipo -> (Float, Float)
 dimen = cataL2D (either (f . p1) ((uncurry . uncurry $ g) . assocl))
       where
-        g (H) (x,y) (a,b) = ( x + a , max y b )
+        g (H) (x,y) (a,b) = ( x + a , max y (b+y/2) )
         g (Hb) (x,y) (a,b) = ( x + a , max y b )
-        g (Ht) (x,y) (a,b) = ( x + a , max y b )
-        g t (x,y) (a,b) = ( max x a , y + b )
+        g (Ht) (x,y) (a,b) = ( x + a , max y (b+y) )
+        g (V) (x,y) (a,b) = ( max x (a+x/2) , y + b )
+        g (Ve) (x,y) (a,b) = ( max x a , y + b )
+        g (Vd) (x,y) (a,b) = ( max x (a+x) , y + b )
         f (x,y) = (fromIntegral x, fromIntegral y)
 
 
@@ -1194,21 +1196,15 @@ calcOrigins :: ((X Caixa Tipo),Origem) -> X (Caixa,Origem) ()
 calcOrigins = anaL2D f
           where
           f (Unid a, c) = i1 (a,c)
-          f (Comp t a b, c) = i2 ((), ((a, c), (b, calc t c (h t a b))))
-          h t a b = desloc t (dimen a) (dimen b)
-
-
-desloc :: Tipo -> (Float,Float) -> (Float,Float) -> (Float,Float)
-desloc H (x,y) (a,b) = (x, y/2 - b/2)
-desloc Ht (x,y) (a,b) = (x, y-b)
-desloc Hb (x,y) (a,b) = (x, 0)
-desloc V (x,y) (a,b) = (x/2 - a/2, y)
-desloc Vd (x,y) (a,b) = (x-a, y)
-desloc Ve (x,y) (a,b) = (0, y)
-
+          f (Comp t a b, c) = i2 ((), ((a, c), (b, calc t c (dimen a))))
 
 calc :: Tipo -> Origem -> (Float, Float) -> Origem
-calc _ (x,y) (a,b) = (x+a,y+b)
+calc H (x,y) (a,b) = (x+a,y+b/2)
+calc Ht (x,y) (a,b) = (x+a,y+b)
+calc Hb (x,y) (a,b) = (x+a,y)
+calc V (x,y) (a,b) = (x+a/2,y+b)
+calc Vd (x,y) (a,b) = (x+a,y+b)
+calc Ve (x,y) (a,b) = (x,y+b)
 
 
 agrup_caixas :: X (Caixa,Origem) () -> Fig
@@ -1239,38 +1235,73 @@ cos' x = prj . for loop init where
 \subsection*{Problema 4}
 Triologia ``ana-cata-hilo":
 \begin{code}
-outFS (FS l) = undefined
-outNode = undefined
+outFS (FS l) = map (id >< outNode) l
 
-baseFS f g h = undefined
+outNode (File b) = i1 b
+outNode (Dir a) = i2 a
+
+baseFS f g h = map (f >< (g -|- h))
 
 cataFS :: ([(a, Either b c)] -> c) -> FS a b -> c
-cataFS g = undefined
+cataFS g = g . recFS (cataFS g) . outFS
 
 anaFS :: (c -> [(a, Either b c)]) -> c -> FS a b
-anaFS g = undefined
+anaFS g = inFS . (recFS (anaFS g) ) . g
 
-hyloFS g h = undefined
+hyloFS g h = cataFS h . anaFS g
 \end{code}
 Outras funções pedidas:
 \begin{code}
 check :: (Eq a) => FS a b -> Bool
-check = undefined
+check = cataFS $ (uncurry (&&)) . (nr >< and) . split (map p1) (map (either true id . p2))
 
 tar :: FS a b -> [(Path a, b)]
-tar = undefined
+tar = cataFS $ concat . (map caminhos)
+        where
+        caminhos (a,Right p) =  map ((curry cons a) >< id) p
+        caminhos (a,Left f) = [([a],f)]
 
 untar :: (Eq a) => [(Path a, b)] -> FS a b
-untar = undefined
+untar = joinDupDirs . anaFS (map travessia)
+        where
+        travessia (a,b) = if length a > 1 then (head a, i2 [(tail a,b)]) else (head a, i1 b)
 
 find :: (Eq a) => a -> FS a b -> [Path a]
-find = undefined
+find = curry $ hyloFS filtraFS paths
+        where
+        filtraFS (a,FS l) = map (transform a) $ filter (checkID a) l
+        checkID n (a, f) = a==n
+        transform n (a, File f) = (a, i1 f)
+        transform n (a, Dir d) = (a, i2 (a,d))
+        paths = concat . map (organize)
+        organize (a, Left f) = [[a]]
+        organize (a, Right p) = map ((curry cons a)) p
 
 new :: (Eq a) => Path a -> b -> FS a b -> FS a b
-new = undefined
+new = curry . curry $  anaFS $ f
+        where
+        f  = cond maior (uncurry $ goForward) (cond igual (uncurry $ newFile) (uncurry $ notHere))
+        goForward (a,b) (FS l) = map (progresso (a,b)) l
+        progresso (a,b) (i, File f) = (i, i1 f)
+        progresso (a,b) (i, Dir d) = if (head a == i) then (i, i2 ((tail a,b),d)) else (i,i2 (([],b),d))
+        newFile (a,b) (FS l) = (curry conc) [(head a,i1 b)] $ map (endOfPath (a,b)) l
+        notHere (a,b) (FS l) = map (endOfPath (a,b)) l
+        endOfPath (a,b) (i, File f) = (i, i1 f)
+        endOfPath (a,b) (i, Dir d) = (i, i2 (([],b),d))
+        maior = (> 1) . length . p1 . p1
+        igual = (== 1) . length . p1 . p1
 
 cp :: (Eq a) => Path a -> Path a -> FS a b -> FS a b
-cp = undefined
+cp =  curry . curry $ f
+        where
+        f ((a,b),fs) = copiaFich a fs (conteudo (a,fs))
+        copiaFich a fs (FS l) = if length l>0 then new a ((\(File b) -> b) . p2 $ head l) fs else fs
+        conteudo = anaFS g
+        g = cond ((>=1) . length . p1) (uncurry $ followPath) nil
+        followPath a (FS l) = map (transf a) $ filter (path a) l
+        path p (a,x) = head p == a
+        transf p (a, File b) = (a, i1 b)
+        transf p (a, Dir fs) = (a, i2 (tail p, fs))
 
 rm :: (Eq a) => (Path a) -> (FS a b) -> FS a b
 rm = undefined
@@ -1279,7 +1310,12 @@ auxJoin :: ([(a, Either b c)],d) -> [(a, Either b (d,c))]
 auxJoin = undefined
 
 cFS2Exp :: a -> FS a b -> (Exp () a)
-cFS2Exp = undefined
+cFS2Exp = curry $ anaExp g
+        where
+        g (a,FS l) = i2 (a, map (leitura) l)
+        leitura (a, File b) = (a, FS [])
+        leitura (a, Dir fs) = (a, fs)
+
 \end{code}
 
 %----------------- Fim do anexo com soluções dos alunos ------------------------%
