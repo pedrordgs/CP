@@ -65,6 +65,7 @@
 %format LTree = "\mathsf{LTree}"
 %format inNat = "\mathsf{in}"
 %format (cataNat (g)) = "\cata{" g "}"
+%format (anaNat (g)) = "\ana{" g "}"
 %format Nat0 = "\N_0"
 %format muB = "\mu "
 %format (frac (n)(m)) = "\frac{" n "}{" m "}"
@@ -85,6 +86,7 @@
 %format .&&&. = "\wedge"
 %format cdots = "\cdots "
 %format pi = "\pi "
+%format (expn (a) (n)) = "{" a "}^{" n "}"
 
 %---------------------------------------------------------------------------
 
@@ -113,13 +115,13 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 99 (preencher)
+\textbf{Grupo} nr. & 87
 \\\hline
 a84783 & Pedro Rodrigues
 \\
-a11111 & Andre Morais
+a83899 & André Morais
 \\
-a11111 & Luis Ribeiro
+a84783 & Luís Ribeiro
 \end{tabular}
 \end{center}
 
@@ -1123,7 +1125,7 @@ alterados os nomes ou tipos das funções dadas, mas pode ser adicionado texto e
 outras funções auxiliares que sejam necessárias.
 
 \subsection*{Problema 1}
-
+\subsubsection*{Triologia ana-cata-hilo}
 \begin{code}
 
 inExpr :: Either Int (Op,(Expr,Expr)) -> Expr
@@ -1137,31 +1139,108 @@ recExpr f = baseExpr id f
 
 cataExpr g = g . recExpr (cataExpr g) . outExpr
 
+anaExpr g = inExpr . recExpr(anaExpr g) . g
+
+hyloExpr h g = cataExpr h . anaExpr g
+
+\end{code}
+\subsubsection*{Calcula}
+Função que parte de uma expressão e devolve o valor da mesma. Basta um catamorfismo
+que vá calculando o valor das subexpressões.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |Expr|
+           \ar[d]_-{|cataNat (either id (uncurry operate))|}
+           \ar[r]^-{|outExpr|}
+&
+    |Int + (Op >< expn Expr 2)|
+           \ar[d]^{|id + (id >< expn (cataNat (either id (uncurry operate))) 2)|}
+\\
+     |Int|
+&
+     |Int + (Op >< expn Int 2)|
+           \ar[l]^-{|either id (uncurry operate)|}
+}
+\end{eqnarray*}
+\begin{code}
+
+calcula :: Expr -> Int
+calcula = cataExpr (either id (uncurry operate))
+
 operate :: Op -> (Int,Int) -> Int
 operate (Op "+") (x,y) = x+y
 operate (Op "-") (x,y) = x-y
 operate (Op "*") (x,y) = x*y
 operate (Op "/") (x,y) = div x y
 
-calcula :: Expr -> Int
-calcula = cataExpr (either id (uncurry operate))
+\end{code}
+\subsubsection*{Show'}
+Função que gera a representação textual de uma |Expr|, igualmente como a |calcula|
+podemos definir um catamorfismo que gere as representações das subexpressões.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |Expr|
+           \ar[d]_-{|cataNat (either show (uncurry print'))|}
+           \ar[r]^-{|outExpr|}
+&
+    |Int + (Op >< expn Expr 2)|
+           \ar[d]^{|id + (id >< expn (cataNat (either show (uncurry print'))) 2)|}
+\\
+     |String|
+&
+     |Int + (Op >< expn String 2)|
+           \ar[l]^-{|either show (uncurry print')|}
+}
+\end{eqnarray*}
+\begin{code}
+
+show' = cataExpr (either show (uncurry print'))
 
 print' (Op o) (a,b) =  "(" ++ a ++ " " ++ o ++ " " ++  b ++ ")"
 
-show' = cataExpr (either show (uncurry print'))
+\end{code}
+\subsubsection*{Compile}
+Gera código posfixo para uma máquina elementar de \pda{stack}. Esta função consiste em duas fases,
+primeiramente é convertida a |String| recebida numa |Expr|para poder ser definido um
+catamorfismo que gere o código das subexpressões.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |String|
+           \ar[d]_-{|readExp|}
+\\
+    |expn ((Expr >< String)) (*)|
+           \ar[d]_-{|p1 . head|}
+\\
+    |Expr|
+           \ar[d]_-{|cataNat (either g (uncurry f))|}
+           \ar[r]^-{|outExpr|}
+&
+    |Int + (Op >< expn Expr 2)|
+           \ar[d]^{|id + (id >< expn (cataNat (either g (uncurry f))) 2)|}
+\\
+     |Codigo|
+&
+     |Int + (Op >< (expn Codigo 2))|
+           \ar[l]^-{|either g (uncurry f)|}
+}
+\end{eqnarray*}
+\begin{code}
 
 compile :: String -> Codigo
 compile = cataExpr (either g (uncurry f)) . p1 . head . readExp
         where
           g = singl . ((++) "PUSH " . show)
           f (Op "+") (a,b) = a ++ b ++ ["ADD"]
-          f (Op "*") (a,b) = a ++ b ++ ["MULT"]
+          f (Op "*") (a,b) = a ++ b ++ ["MUL"]
 
 \end{code}
-
 \subsection*{Problema 2}
-
+\subsubsection*{Triologia ana-cata-hilo}
 \begin{code}
+
 inL2D :: Either a (b, (X a b,X a b)) -> X a b
 inL2D = either Unid ((uncurry . uncurry $ Comp) . assocl)
 
@@ -1177,8 +1256,54 @@ cataL2D g = g . recL2D (cataL2D g) . outL2D
 
 anaL2D g = inL2D . (recL2D (anaL2D g) ) . g
 
+hyloL2D f g = cataL2D f . anaL2D g
+
+\end{code}
+\subsubsection*{CollectLeafs}
+Esta função transforma um L2D numa lista com todas as |Unids| da mesma.
+Bastou definir um catamorfismo que guardasse na lista cada |Unid|.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |X A B|
+           \ar[d]_-{|cataNat (either singl (uncurry f))|}
+           \ar[r]^-{|outL2D|}
+&
+    |A + (B >< expn ((X A B)) 2)|
+           \ar[d]^-{|id + (id >< expn (cataNat (either singl (uncurry f))) 2)|}
+\\
+     |expn A (*)|
+&
+     |A + (B >< expn ((expn A (*))) 2)|
+           \ar[l]^-{|either singl (uncurry f)|}
+}
+\end{eqnarray*}
+\begin{code}
+
 collectLeafs = cataL2D (either singl (uncurry f))
         where f b (x,y) = x ++ y
+
+\end{code}
+\subsubsection*{Dimen}
+Calcula a dimensão de um |X Caixa Tipo| com um simples catamorfismo que
+vai calculando as dimensões das subagregações.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |X A B|
+           \ar[d]_-{|cataNat (either (f . p1) ((uncurry (uncurry g))))|}
+           \ar[r]^-{|outL2D|}
+&
+    |A + (B >< expn ((X A B)) 2)|
+           \ar[d]^-{|id + (id >< expn (cataNat (either (f . p1) ((uncurry (uncurry g))))) 2)|}
+\\
+     |Float >< Float|
+&
+     |A + (B >< expn ((Float >< Float)) 2)|
+           \ar[l]^-{|either (f . p1) ((uncurry (uncurry g)))|}
+}
+\end{eqnarray*}
+\begin{code}
 
 dimen :: X Caixa Tipo -> (Float, Float)
 dimen = cataL2D (either (f . p1) ((uncurry . uncurry $ g) . assocl))
@@ -1191,6 +1316,27 @@ dimen = cataL2D (either (f . p1) ((uncurry . uncurry $ g) . assocl))
         g (Vd) (x,y) (a,b) = ( max x (a+x) , y + b )
         f (x,y) = (fromIntegral x, fromIntegral y)
 
+\end{code}
+\subsubsection*{Calcula Origens}
+Calcula as origens para cada caixa consoante o tipo de agregação e a origem inicial.
+No final agrupa todas as caixas e as respetivas origens no tipo |X (Caixa,Origem) ()|.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |X (Caixa >< Origem) ()|
+&
+    |(Caixa><Origem) + (() >< expn ((X (Caixa><Origem) ())) 2)|
+           \ar[l]_-{|inFS|}
+\\
+     |X Caixa Tipo >< Origem|
+           \ar[r]_-{|f|}
+           \ar[u]^-{|anaNat f|}
+&
+     |(Caixa><Origem) + (() >< expn ((X Caixa Tipo >< Origem)) 2)|
+           \ar[u]_-{|id + (id >< expn ((anaNat f)) 2)|}
+}
+\end{eqnarray*}
+\begin{code}
 
 calcOrigins :: ((X Caixa Tipo),Origem) -> X (Caixa,Origem) ()
 calcOrigins = anaL2D f
@@ -1207,10 +1353,35 @@ calc Vd (x,y) (a,b) = (x+a,y+b)
 calc Ve (x,y) (a,b) = (x,y+b)
 
 
+\end{code}
+\subsubsection*{Agrupa Caixas}
+Função que constroi uma figura, ou seja, cria uma lista com o par |(Origem,Caixa)| a partir de um |X (Caixa,Origem) ()|
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |X (Caixa >< Origem) ()|
+           \ar[d]_-{|cataNat (either (singl . swap) (uncurry f))|}
+           \ar[r]^-{|outL2D|}
+&
+    |(Caixa >< Origem) + (() >< expn ((X (Caixa><Origem) ())) 2)|
+           \ar[d]^-{|id + (id >< expn (cataNat (either (singl . swap) (uncurry f))) 2)|}
+\\
+     |Fig|
+&
+     |(Caixa >< Origem) + (() >< expn Fig 2)|
+           \ar[l]^-{|either (singl . swap) (uncurry f)|}
+}
+\end{eqnarray*}
+\begin{code}
+
 agrup_caixas :: X (Caixa,Origem) () -> Fig
 agrup_caixas = cataL2D (either (singl . swap) (uncurry f))
               where f b (x,y) = x ++ y
 
+\end{code}
+\subsubsection*{Funções para teste}
+As funções |caixasAndOrigin2Pict| e |mostra_caixas| servem para testar as nossas funções anteriores,
+visto transformam as caixas numa |Picture| e dão display dessa mesma |Picture|, respetivamente.
+\begin{code}
 
 caixasAndOrigin2Pict = G.pictures . map (uncurry f) . collectLeafs . calcOrigins
               where
@@ -1222,6 +1393,23 @@ mostra_caixas = display . caixasAndOrigin2Pict
 \end{code}
 
 \subsection*{Problema 3}
+O problema 3 consistia em implementar a função cos' x n que dá a série de Taylor da função cosseno.
+Para construir o ciclo-for foram encontras as seguintes funções:
+
+\begin{spec}
+e x 0 = 1
+e x (n+1) = e x n + h x n
+
+h x 0 = -(expn x 2) / 2
+h x (n+1) = h x n * ( -(expn x 2) / s n )
+
+s 0 = 12
+s (n+1) = s n + p n
+
+p 0 = 18
+p (n+1) = p n + 8
+\end{spec}
+
 Solução:
 \begin{code}
 
@@ -1231,9 +1419,17 @@ cos' x = prj . for loop init where
    prj (e,h,s,p) = e
 
 \end{code}
-
+\subsubsection*{Valorização:}
+\begin{spec}
+double cos' (double x, int n){
+  double e,h,s,p;
+  e=1;h=((-x^2)/2);s=12;p=18;int i;
+  for(i=0;i<n;i++){e=e+h;h= h * ((-x^2)/s);s=s+p;p=p+8;}
+  return e;
+}
+\end{spec}
 \subsection*{Problema 4}
-Triologia ``ana-cata-hilo":
+\subsubsection*{Triologia ana-cata-hilo}
 \begin{code}
 outFS (FS l) = map (id >< outNode) l
 
@@ -1250,10 +1446,67 @@ anaFS g = inFS . (recFS (anaFS g) ) . g
 
 hyloFS g h = cataFS h . anaFS g
 \end{code}
-Outras funções pedidas:
+\subsubsection*{Diagrama geral do cataFS}
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |FS A B|
+           \ar[d]_-{|cataNat g|}
+           \ar[r]^-{|outFS|}
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[d]^-{|map (id >< (id + cataNat g))|}
+\\
+     |T|
+&
+     |expn ((A >< (B + T))) (*)|
+           \ar[l]^-{|g|}
+}
+\end{eqnarray*}
+
+\subsubsection*{Check}
+Verifica a integridade do |file system|, ou seja, em cada diretoria não podem haver ficheiros
+ou diretorias com os mesmos identificadores. Para isso basta fazer um catamorfismo
+e verificar a integridade de cada sub-diretoria.
+\begin{eqnarray*}
+\xymatrix@@C=8cm{
+    |FS A B|
+           \ar[d]_-{|cataNat f|}
+           \ar[r]^-{|outFS|}
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[d]^-{|map (id >< (id + cataNat f))|}
+\\
+     |Bool|
+&
+     |expn ((A >< (B + Bool))) (*)|
+           \ar[l]^-{|f = (uncurry (&&)) . (nr >< and) . split (map p1) (map (either true id . p2))|}
+}
+\end{eqnarray*}
 \begin{code}
+
 check :: (Eq a) => FS a b -> Bool
 check = cataFS $ (uncurry (&&)) . (nr >< and) . split (map p1) (map (either true id . p2))
+
+\end{code}
+\subsubsection*{Tar}
+Recolhe todos os conteudos de ficheiros de um |FS A B| e liga-os aos seus |path|.
+Com um catamorfismo torna-se simples percorrendo todas as sub-diretorias e guardando-o num par |Path >< Conteudo|.
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |FS A B|
+           \ar[d]_-{|cataNat (concat . (map caminhos))|}
+           \ar[r]^-{|outFS|}
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[d]^-{|map (id >< (id + cataNat (concat . (map caminhos))))|}
+\\
+     |expn ((Path A >< B)) (*)|
+&
+     |expn ((A >< (B + (expn ((Path A >< B)) (*))))) (*)|
+           \ar[l]^-{|concat . (map caminhos)|}
+}
+\end{eqnarray*}
+\begin{code}
 
 tar :: FS a b -> [(Path a, b)]
 tar = cataFS $ concat . (map caminhos)
@@ -1261,10 +1514,63 @@ tar = cataFS $ concat . (map caminhos)
         caminhos (a,Right p) =  map ((curry cons a) >< id) p
         caminhos (a,Left f) = [([a],f)]
 
+\end{code}
+\subsubsection*{Untar}
+Reverte a função |tar|, ou seja, a partir de uma lista com |(Path >< Conteudo)| cria um |FS A B|.
+Sendo um inverso da função |tar| que utiliza um catamorfismo, então há a possibilidade
+de resolver este problema com um anamorfismo. Foi essa a nossa estratrégia, definimos um anamorfismo
+que percorre a lista |(Path >< Conteudo)| e vai criando as diretorias ou ficheiros correspondes,
+originando no final um |FS A B|.
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |FS A B|
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[l]_-{|inFS|}
+\\
+     |expn ((Path A >< B)) (*)|
+           \ar[u]^-{|anaNat (map travessia)|}
+           \ar[r]_-{|map travessia|}
+&
+     |expn ((A >< (B + (expn ((Path A >< B)) (*))))) (*)|
+           \ar[u]_-{|map (id >< (id + anaNat travessia))|}
+}
+\end{eqnarray*}
+\begin{code}
+
 untar :: (Eq a) => [(Path a, b)] -> FS a b
 untar = joinDupDirs . anaFS (map travessia)
         where
         travessia (a,b) = if length a > 1 then (head a, i2 [(tail a,b)]) else (head a, i1 b)
+
+\end{code}
+\subsubsection*{Find}
+Esta função consiste em juntar os |paths| (i.e caminhos) até a ficheiros com um certo identificador.
+Para isso definimos um hilomorfismo, onde primeiramente filtramos o |FS A B| onde eliminamos
+todos os ficheiros que não têm esse identificador e, mais tarde, juntamos os |paths| todos numa lista.
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |expn (Path A) (*)|
+&
+    |expn ((A >< (B + (expn (Path A) (*))))) (*)|
+           \ar[l]_-{|paths|}
+\\
+     |FS a b|
+           \ar[u]^-{|cataNat paths|}
+&
+     |expn ((A >< (B + FS A B))) (*)|
+           \ar[u]_-{|map (id >< (id + cataNat paths))|}
+           \ar[l]_-{|inFS|}
+\\
+     |(A >< FS A B)|
+           \ar[u]^-{|anaNat filtraFS|}
+           \ar[r]_-{|filtraFS|}
+&
+     |expn ((A >< (B + (A >< FS A B)))) (*)|
+           \ar[u]_-{|map (id >< (id + anaNat filtraFS))|}
+}
+\end{eqnarray*}
+\begin{code}
 
 find :: (Eq a) => a -> FS a b -> [Path a]
 find = curry $ hyloFS filtraFS paths
@@ -1277,44 +1583,173 @@ find = curry $ hyloFS filtraFS paths
         organize (a, Left f) = [[a]]
         organize (a, Right p) = map ((curry cons a)) p
 
+\end{code}
+\subsubsection*{New}
+Esta função é equivalente ao comando bash |touch|, que corresponde à criação
+de um ficheiro na diretoria que lhe é enviada como argumento. Foi definido um
+anamorfismo que itera sobre o |File System| e procura o |path| correspondente,
+mantendo a integridade dos outros ficheiros/diretorias. Quando chega à diretoria
+onde vai criar o novo ficheiro (i.e. |length (Path A) == 1|), então cria o ficheiro
+e continua a iterar sobre o resto do |File System| não perder ficheiros/diretorias
+respetivamente ao |File System| recebido.
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |FS A B|
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[l]_-{|inFS|}
+\\
+     |(Path A >< B) >< FS A B|
+           \ar[u]^-{|anaNat f|}
+           \ar[r]_-{|f|}
+&
+     |expn ((A >< (B + ((Path A >< B) >< FS A B)))) (*)|
+           \ar[u]_-{|map (id >< (id + anaNat f))|}
+}
+\end{eqnarray*}
+\begin{code}
+
 new :: (Eq a) => Path a -> b -> FS a b -> FS a b
-new = curry . curry $  anaFS $ f
-        where
-        f  = cond maior (uncurry $ goForward) (cond igual (uncurry $ newFile) (uncurry $ notHere))
-        goForward (a,b) (FS l) = map (progresso (a,b)) l
-        progresso (a,b) (i, File f) = (i, i1 f)
-        progresso (a,b) (i, Dir d) = if (head a == i) then (i, i2 ((tail a,b),d)) else (i,i2 (([],b),d))
-        newFile (a,b) (FS l) = (curry conc) [(head a,i1 b)] $ map (endOfPath (a,b)) l
-        notHere (a,b) (FS l) = map (endOfPath (a,b)) l
-        endOfPath (a,b) (i, File f) = (i, i1 f)
-        endOfPath (a,b) (i, Dir d) = (i, i2 (([],b),d))
-        maior = (> 1) . length . p1 . p1
-        igual = (== 1) . length . p1 . p1
+new = curry . curry $  anaFS  f where
+      f  = cond maior (uncurry goForward) (cond igual (uncurry newFile) (uncurry notHere))
+      goForward (a,b) (FS l) = map (progresso (a,b)) l
+      progresso (a,b) (i, File f) = (i, i1 f)
+      progresso (a,b) (i, Dir d) = if (head a == i) then (i, i2 ((tail a,b),d)) else (i,i2 (([],b),d))
+      newFile (a,b) (FS l) = (curry conc) [(head a,i1 b)] $ map (endOfPath (a,b)) l
+      notHere (a,b) (FS l) = map (endOfPath (a,b)) l
+      endOfPath (a,b) (i, File f) = (i, i1 f)
+      endOfPath (a,b) (i, Dir d) = (i, i2 (([],b),d))
+      maior = (> 1) . length . p1 . p1
+      igual = (== 1) . length . p1 . p1
+
+\end{code}
+\subsubsection*{Questão:}
+A propriedade |check| não permite que diretorias e ficheiros tenham o mesmo nome, já a |CheckFile| permite, representando a realidade, logo, se tentarmos criar um ficheiro com o mesmo nome da diretoria, a |check| invalidava a propriedade.
+\subsubsection*{Copy}
+Esta função é equivalente ao comando bash |cp|, que corresponde à criação
+de um ficheiro a partir de outro já existente. Sendo assim foi necessário usar
+um anamorfismo para ir buscar o conteudo do ficheiro que queremos copiar, e depois
+foi aproveitada a função |new| para criar um novo ficheiro com o mesmo conteudo do anterior
+mas no |path| recebido como argumento. Então a estratégia do anamorfismo foi filtrar tudo
+o que não pertencia ao |Path A| recebido como argumento, no final obtemos um |FS A B| com
+o ficheiro que queremos copiar, assim, basta apenas utilizar a função |new| e criar o novo ficheiro
+com o mesmo conteudo do filtrado no anamorfismo.
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |FS A B|
+\\
+    |(Path A >< B) >< FS A B|
+           \ar[u]^-{|(uncurry (uncurry new))|}
+\\
+    |FS A B|
+           \ar[u]^-{|split (split (p1 . p1) (p2 . head . p2)) (p2 . p1)|}
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[l]_-{|inFS|}
+\\
+     |Path A >< FS A B|
+           \ar[u]^-{|anaNat g|}
+           \ar[r]_-{|g|}
+&
+     |expn ((A >< (B + (Path A >< FS A B)))) (*)|
+           \ar[u]_-{|map (id >< (id + anaNat g))|}
+}
+\end{eqnarray*}
+\begin{code}
 
 cp :: (Eq a) => Path a -> Path a -> FS a b -> FS a b
-cp =  curry . curry $ f
-        where
-        f ((a,b),fs) = copiaFich a fs (conteudo (a,fs))
-        copiaFich a fs (FS l) = if length l>0 then new a ((\(File b) -> b) . p2 $ head l) fs else fs
-        conteudo = anaFS g
-        g = cond ((>=1) . length . p1) (uncurry $ followPath) nil
-        followPath a (FS l) = map (transf a) $ filter (path a) l
-        path p (a,x) = head p == a
-        transf p (a, File b) = (a, i1 b)
-        transf p (a, Dir fs) = (a, i2 (tail p, fs))
+cp = curry . curry $ f where
+    f = copiaFich . split (split (p2 . p1) p2) (conteudo . split (p1 . p1) p2)
+    copiaFich = cond ((>0) . length . p2) ((uncurry (uncurry new)) . split (split (p1 . p1) (p2 . head . p2)) (p2 . p1)) (p2 . p1) . (id><tar)
+    conteudo = anaFS g
+    g = cond ((>1) . length . p1) followPath (cond ((==1) . length . p1) encontrou nil) . (id >< outFS)
+    followPath = auxJoin . split (uncurry (filter . curry path)) (tail . p1)
+    path = either false ((uncurry (==)) . (head >< p1))  . distr . (id >< distr)
+    encontrou = auxJoin . split (uncurry (filter . curry founded)) (tail . p1)
+    founded = either ((uncurry (==)) . (head >< p1)) false . distr . (id >< distr)
+
+
+\end{code}
+\subsubsection*{Remove}
+Esta função é equivalente ao comando bash |rm|, que corresponde à remoção de um
+ficheiro dado um determinado |path| (nota. esta função apenas elimina ficheiros!). Assim, foi
+definido um anamorfismo parecido com o |new|, de modo a que percorra o |File System|
+seguindo o |path| recebido como argumento e, no momento em que chega à diretoria onde
+se encontra o ficheiro em questão (i.e. |length (Path A) == 1|), filtra todos os que têm identificador
+diferente do que queremos eliminar, assim, acabamos por eliminar o ficheiro que queriamos.
+Depois continuamos com a navegação nas sub-diretorias correspondentes para que não se perca
+ficheiros/diretorias relativamente ao |File System| recebido.
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |FS A B|
+&
+    |expn ((A >< (B + FS A B))) (*)|
+           \ar[l]_-{|inFS|}
+\\
+     |Path A >< FS A B|
+           \ar[u]^-{|anaNat f|}
+           \ar[r]_-{|f|}
+&
+     |expn ((A >< (B + (Path A >< FS A B)))) (*)|
+           \ar[u]_-{|map (id >< (id + anaNat f))|}
+}
+\end{eqnarray*}
+\begin{code}
 
 rm :: (Eq a) => (Path a) -> (FS a b) -> FS a b
-rm = undefined
+rm = curry $ anaFS f where
+     f = cond maior goForward (cond igual removeFile fimPath) . (id >< outFS)
+     goForward = uncurry (map . (curry progresso))
+     progresso = cond (uncurry (==) . (head >< p1)) goCase stopCase
+     goCase = (id >< (p2 -|- (tail >< id))) . (id >< distr . swap) . assocr . swap
+     stopCase = (id >< (id -|- split nil id)) . p2
+     removeFile = auxJoin . split (uncurry (filter . curry dif)) nil
+     dif = (either (uncurry (/=) . (head >< p1)) true) . distr . (id >< distr)
+     fimPath = auxJoin . (id >< nil) . swap
+     maior = (>1) . length . p1
+     igual = (==1) . length . p1
 
+\end{code}
+
+\subsubsection*{Funções Auxiliares}
+A função |auxJoin| recebe um par com uma lista e um elemento, e junta esse elemento na
+direita de um Either, foi uma grande ajuda para quando navegamos pelas sub-diretorias.
+
+\begin{code}
 auxJoin :: ([(a, Either b c)],d) -> [(a, Either b (d,c))]
-auxJoin = undefined
+auxJoin = uncurry (flip (map . curry g)) where
+      g = (id >< h) . assocr . swap
+      h = (p1 -|- swap) . distl
+
+\end{code}
+\subsubsection*{Adicional: cFS2Exp}
+Converte um |File System| numa |Exp| para que depois possa ser utilizada a função |dotFS| para visualizar
+o |File System| em \graphviz{Graphviz}. Para isso, tal como diz no enunciado, foi utilizado
+anamorfismo em Exp que percorria o |Fyle System| e guardava em |Terms| os
+identificadores das diretorias/ficheiros.
+
+\begin{eqnarray*}
+\xymatrix@@C=4cm{
+    |Exp () A|
+&
+    |() + (A >< expn ((Expr () A)) (*))|
+           \ar[l]_-{|inFS|}
+\\
+     |A >< FS A B|
+           \ar[u]^-{|anaNat g|}
+           \ar[r]_-{|g|}
+&
+     |() + (A >< expn ((A >< FS A B)) (*))|
+           \ar[u]_-{|map (id >< (id + anaNat f))|}
+}
+\end{eqnarray*}
+\begin{code}
 
 cFS2Exp :: a -> FS a b -> (Exp () a)
-cFS2Exp = curry $ anaExp g
-        where
-        g (a,FS l) = i2 (a, map (leitura) l)
-        leitura (a, File b) = (a, FS [])
-        leitura (a, Dir fs) = (a, fs)
+cFS2Exp = curry f where
+        f = anaExp g
+        g = i2 . (id >< map leitura) . (id >< outFS)
+        leitura = either (id >< inFS . nil) (id) . distr
 
 \end{code}
 

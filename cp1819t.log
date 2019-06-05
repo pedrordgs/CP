@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.6.1)  4 JUN 2019 00:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/Arch Linux) (preloaded format=pdflatex 2019.6.1)  5 JUN 2019 23:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -674,17 +674,17 @@ LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <10> not available
 
 \openout5 = `cp1819t.ptb'.
 
-<cp1819t_media/ex3.png, id=105, 379.4175pt x 309.155pt>
+<cp1819t_media/ex3.png, id=109, 379.4175pt x 309.155pt>
 File: cp1819t_media/ex3.png Graphic file (type png)
 <use cp1819t_media/ex3.png>
 Package pdftex.def Info: cp1819t_media/ex3.png  used on input line 629.
 (pdftex.def)             Requested size: 70.0pt x 57.0371pt.
-<cp1819t_media/ex2.png, id=107, 290.08376pt x 284.06125pt>
+<cp1819t_media/ex2.png, id=111, 290.08376pt x 284.06125pt>
 File: cp1819t_media/ex2.png Graphic file (type png)
 <use cp1819t_media/ex2.png>
 Package pdftex.def Info: cp1819t_media/ex2.png  used on input line 632.
 (pdftex.def)             Requested size: 91.04742pt x 89.15468pt.
-<cp1819t_media/ex.png, id=108, 925.4575pt x 724.7075pt>
+<cp1819t_media/ex.png, id=112, 925.4575pt x 724.7075pt>
 File: cp1819t_media/ex.png Graphic file (type png)
 <use cp1819t_media/ex.png>
 Package pdftex.def Info: cp1819t_media/ex.png  used on input line 639.
@@ -769,7 +769,7 @@ LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <10> not available
 
 \openout5 = `cp1819t.ptb'.
 
-<cp1819t_media/fs.png, id=192, 179.67125pt x 255.95625pt>
+<cp1819t_media/fs.png, id=196, 179.67125pt x 255.95625pt>
 File: cp1819t_media/fs.png Graphic file (type png)
 <use cp1819t_media/fs.png>
 Package pdftex.def Info: cp1819t_media/fs.png  used on input line 1109.
@@ -992,343 +992,149 @@ Overfull \hbox (18.06151pt too wide) in paragraph at lines 1793--1797
 
 \openout5 = `cp1819t.ptb'.
 
-[14]
+[14] <xymatrix 2x2 191>
 \openout5 = `cp1819t.ptb'.
 
- [15]
+ <xymatrix 2x2 191>
+\openout5 = `cp1819t.ptb'.
+
+ <xymatrix 2x4 287> [15]
+\openout5 = `cp1819t.ptb'.
+
+\openout5 = `cp1819t.ptb'.
+
+ <xymatrix
+2x2 194>
+\openout5 = `cp1819t.ptb'.
+
+ [16] <xymatrix 2x2 194>
+\openout5 = `cp1819t.ptb'.
+
+ <xymatrix 2x2 194>
+Overfull \hbox (59.3774pt too wide) in alignment at lines 2050--2064
+ [][][] []
+ []
+
+\openout5 = `cp1819t.ptb'.
+
+<xymatrix 2x2 194>
+Overfull \hbox (58.3156pt too wide) in alignment at lines 2099--2113
+ [][][] []
+ []
+
+\openout5 = `cp1819t.ptb'.
+
+[17]
 \openout5 = `cp1819t.ptb'.
 
 \openout5 = `cp1819t.ptb'.
 
 \openout5 = `cp1819t.ptb'.
 
+\openout5 = `cp1819t.ptb'.
 
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
+\openout5 = `cp1819t.ptb'.
+
+ [18] <xymatrix 2x2 194> <xymatrix 2x2 194>
+\openout5 = `cp1819t.ptb'.
+
+ <xymatrix 2x2 194>
+Overfull \hbox (57.89934pt too wide) in alignment at lines 2282--2296
+ [][][] []
  []
 
+\openout5 = `cp1819t.ptb'.
 
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
+<xymatrix 2x2 194>
+\openout5 = `cp1819t.ptb'.
+
+ [19] <xymatrix 2x3 334>
+\openout5 = `cp1819t.ptb'.
+
+ <xymatrix 2x2 194>
+\openout5 = `cp1819t.ptb'.
+
+ [20] <xymatrix
+2x4 290>
+Overfull \hbox (13.19171pt too wide) in alignment at lines 2491--2511
+ [][][] []
  []
 
+\openout5 = `cp1819t.ptb'.
 
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
+[21] <xymatrix 2x2 194>
+\openout5 = `cp1819t.ptb'.
 
+\openout5 = `cp1819t.ptb'.
 
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
+ <xymatrix 2x2 194>
+\openout5 = `cp1819t.ptb'.
 
+ (./cp1819t.ind [22] [23
 
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
 
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-
-Overfull \hbox (0.59708pt too wide) in paragraph at lines 2011--2170
- [][][][] 
- []
-
-[16] (./cp1819t.ind [17] [18
-
-
-]) (./cp1819t.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2184.
- [19
+])
+(./cp1819t.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2682.
+ [24
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2184.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2682.
  (./cp1819t.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2184.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2184.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2682.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2682.
 
-Package rerunfilecheck Info: File `cp1819t.out' has not changed.
-(rerunfilecheck)             Checksum: 29FC3DE535516031ECF2FD2C04E8E7A4;460.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2184.
+
+
+Package rerunfilecheck Warning: File `cp1819t.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `cp1819t.out':
+(rerunfilecheck)             Before: 7BB2215C27CA1153E9455DCC7BAEBD48;526
+(rerunfilecheck)             After:  29FC3DE535516031ECF2FD2C04E8E7A4;460.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2682.
  ) 
 Here is how much of TeX's memory you used:
- 12825 strings out of 492616
- 182789 string characters out of 6135178
- 364410 words of memory out of 5000000
- 16359 multiletter control sequences out of 15000+600000
+ 12873 strings out of 492616
+ 183309 string characters out of 6135178
+ 353413 words of memory out of 5000000
+ 16378 multiletter control sequences out of 15000+600000
  42262 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,18n,77p,3294b,765s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
-r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7
-.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-d
-ist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts
-/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/uc
-rro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/shar
-e/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-dist/fonts/t
-ype1/urw/palatino/uplbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/u
-plr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/shar
-e/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texmf-dist/fonts/
-type1/public/xypic/xyatip10.pfb></usr/share/texmf-dist/fonts/type1/public/xypic
-/xybtip10.pfb>
-Output written on cp1819t.pdf (19 pages, 341315 bytes).
+ 42i,20n,77p,3294b,594s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{subsubsection.D.0.1} has been referenced but does
+ not exist, replaced by a fixed one
+
+{/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cmext
+ra/cmex7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/s
+hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symb
+ols/msbm7.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/s
+hare/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino
+/uplb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb></usr/s
+hare/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist/font
+s/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino
+/uplri8a.pfb></usr/share/texmf-dist/fonts/type1/public/xypic/xyatip10.pfb></usr
+/share/texmf-dist/fonts/type1/public/xypic/xybtip10.pfb>
+Output written on cp1819t.pdf (24 pages, 386870 bytes).
 PDF statistics:
- 446 PDF objects out of 1000 (max. 8388607)
- 385 compressed objects within 4 object streams
- 86 named destinations out of 1000 (max. 500000)
- 77 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 514 PDF objects out of 1000 (max. 8388607)
+ 444 compressed objects within 5 object streams
+ 115 named destinations out of 1000 (max. 500000)
+ 85 words of extra memory for PDF output out of 10000 (max. 10000000)
 

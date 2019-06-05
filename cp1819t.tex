@@ -300,13 +300,13 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 99 (preencher)
+\textbf{Grupo} nr. & 87
 \\\hline
 a84783 & Pedro Rodrigues
 \\
-a11111 & Andre Morais
+a83899 & André Morais
 \\
-a11111 & Luis Ribeiro
+a84783 & Luís Ribeiro
 \end{tabular}
 \end{center}
 
@@ -1796,13 +1796,9 @@ alterados os nomes ou tipos das funções dadas, mas pode ser adicionado texto e
 outras funções auxiliares que sejam necessárias.
 
 \subsection*{Problema 1}
-
+\subsubsection*{Triologia ana-cata-hilo}
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{56}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{inExpr}\mathbin{::}\Conid{Int}+(\Conid{Op},(\Conid{Expr},\Conid{Expr}))\to \Conid{Expr}{}\<[E]%
 \\
@@ -1818,6 +1814,37 @@ outras funções auxiliares que sejam necessárias.
 \\[\blanklineskip]%
 \>[B]{}\Varid{cataExpr}\;\Varid{g}\mathrel{=}\Varid{g}\comp \Varid{recExpr}\;(\Varid{cataExpr}\;\Varid{g})\comp \Varid{outExpr}{}\<[E]%
 \\[\blanklineskip]%
+\>[B]{}\Varid{anaExpr}\;\Varid{g}\mathrel{=}\Varid{inExpr}\comp \Varid{recExpr}\;(\Varid{anaExpr}\;\Varid{g})\comp \Varid{g}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{hyloExpr}\;\Varid{h}\;\Varid{g}\mathrel{=}\Varid{cataExpr}\;\Varid{h}\comp \Varid{anaExpr}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Calcula}
+Função que parte de uma expressão e devolve o valor da mesma. Basta um catamorfismo
+que vá calculando o valor das subexpressões.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{Expr}}
+           \ar[d]_-{\ensuremath{\cata{\alt{\Varid{id}}{\uncurry{\Varid{operate}}}}}}
+           \ar[r]^-{\ensuremath{\Varid{outExpr}}}
+&
+    \ensuremath{\Conid{Int}\mathbin{+}(\Conid{Op}\times{\Conid{Expr}}^{\mathrm{2}})}
+           \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{\cata{\alt{\Varid{id}}{\uncurry{\Varid{operate}}}}}^{\mathrm{2}})}}
+\\
+     \ensuremath{\Conid{Int}}
+&
+     \ensuremath{\Conid{Int}\mathbin{+}(\Conid{Op}\times{\Conid{Int}}^{\mathrm{2}})}
+           \ar[l]^-{\ensuremath{\alt{\Varid{id}}{\uncurry{\Varid{operate}}}}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{calcula}\mathbin{::}\Conid{Expr}\to \Conid{Int}{}\<[E]%
+\\
+\>[B]{}\Varid{calcula}\mathrel{=}\Varid{cataExpr}\;\alt{\Varid{id}}{\uncurry{\Varid{operate}}}{}\<[E]%
+\\[\blanklineskip]%
 \>[B]{}\Varid{operate}\mathbin{::}\Conid{Op}\to (\Conid{Int},\Conid{Int})\to \Conid{Int}{}\<[E]%
 \\
 \>[B]{}\Varid{operate}\;(\Conid{Op}\;\text{\ttfamily \char34 +\char34})\;(\Varid{x},\Varid{y})\mathrel{=}\Varid{x}\mathbin{+}\Varid{y}{}\<[E]%
@@ -1827,17 +1854,70 @@ outras funções auxiliares que sejam necessárias.
 \>[B]{}\Varid{operate}\;(\Conid{Op}\;\text{\ttfamily \char34 *\char34})\;(\Varid{x},\Varid{y})\mathrel{=}\Varid{x}\mathbin{*}\Varid{y}{}\<[E]%
 \\
 \>[B]{}\Varid{operate}\;(\Conid{Op}\;\text{\ttfamily \char34 /\char34})\;(\Varid{x},\Varid{y})\mathrel{=}\Varid{x}\div \Varid{y}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\Varid{calcula}\mathbin{::}\Conid{Expr}\to \Conid{Int}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Show'}
+Função que gera a representação textual de uma \ensuremath{\Conid{Expr}}, igualmente como a \ensuremath{\Varid{calcula}}
+podemos definir um catamorfismo que gere as representações das subexpressões.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{Expr}}
+           \ar[d]_-{\ensuremath{\cata{\alt{\Varid{show}}{\uncurry{\Varid{print'}}}}}}
+           \ar[r]^-{\ensuremath{\Varid{outExpr}}}
+&
+    \ensuremath{\Conid{Int}\mathbin{+}(\Conid{Op}\times{\Conid{Expr}}^{\mathrm{2}})}
+           \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{\cata{\alt{\Varid{show}}{\uncurry{\Varid{print'}}}}}^{\mathrm{2}})}}
 \\
-\>[B]{}\Varid{calcula}\mathrel{=}\Varid{cataExpr}\;\alt{\Varid{id}}{\uncurry{\Varid{operate}}}{}\<[E]%
+     \ensuremath{\Conid{String}}
+&
+     \ensuremath{\Conid{Int}\mathbin{+}(\Conid{Op}\times{\Conid{String}}^{\mathrm{2}})}
+           \ar[l]^-{\ensuremath{\alt{\Varid{show}}{\uncurry{\Varid{print'}}}}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{56}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{show'}\mathrel{=}\Varid{cataExpr}\;\alt{\Varid{show}}{\uncurry{\Varid{print'}}}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{print'}\;(\Conid{Op}\;\Varid{o})\;(\Varid{a},\Varid{b})\mathrel{=}{}\<[24]%
 \>[24]{}\text{\ttfamily \char34 (\char34}\plus \Varid{a}\plus \text{\ttfamily \char34 ~\char34}\plus \Varid{o}\plus \text{\ttfamily \char34 ~\char34}\plus {}\<[56]%
 \>[56]{}\Varid{b}\plus \text{\ttfamily \char34 )\char34}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\Varid{show'}\mathrel{=}\Varid{cataExpr}\;\alt{\Varid{show}}{\uncurry{\Varid{print'}}}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Compile}
+Gera código posfixo para uma máquina elementar de \pda{stack}. Esta função consiste em duas fases,
+primeiramente é convertida a \ensuremath{\Conid{String}} recebida numa \ensuremath{\Conid{Expr}}para poder ser definido um
+catamorfismo que gere o código das subexpressões.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{String}}
+           \ar[d]_-{\ensuremath{\Varid{readExp}}}
+\\
+    \ensuremath{{(\Conid{Expr}\times\Conid{String})}^{\mathbin{*}}}
+           \ar[d]_-{\ensuremath{\p1\comp \Varid{head}}}
+\\
+    \ensuremath{\Conid{Expr}}
+           \ar[d]_-{\ensuremath{\cata{\alt{\Varid{g}}{\uncurry{\Varid{f}}}}}}
+           \ar[r]^-{\ensuremath{\Varid{outExpr}}}
+&
+    \ensuremath{\Conid{Int}\mathbin{+}(\Conid{Op}\times{\Conid{Expr}}^{\mathrm{2}})}
+           \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{\cata{\alt{\Varid{g}}{\uncurry{\Varid{f}}}}}^{\mathrm{2}})}}
+\\
+     \ensuremath{\Conid{Codigo}}
+&
+     \ensuremath{\Conid{Int}\mathbin{+}(\Conid{Op}\times{\Conid{Codigo}}^{\mathrm{2}})}
+           \ar[l]^-{\ensuremath{\alt{\Varid{g}}{\uncurry{\Varid{f}}}}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{compile}\mathbin{::}\Conid{String}\to \Conid{Codigo}{}\<[E]%
 \\
 \>[B]{}\Varid{compile}\mathrel{=}\Varid{cataExpr}\;\alt{\Varid{g}}{\uncurry{\Varid{f}}}\comp \p1\comp \Varid{head}\comp \Varid{readExp}{}\<[E]%
@@ -1852,18 +1932,13 @@ outras funções auxiliares que sejam necessárias.
 \>[11]{}\Varid{f}\;(\Conid{Op}\;\text{\ttfamily \char34 +\char34})\;(\Varid{a},\Varid{b})\mathrel{=}\Varid{a}\plus \Varid{b}\plus [\mskip1.5mu \text{\ttfamily \char34 ADD\char34}\mskip1.5mu]{}\<[E]%
 \\
 \>[9]{}\hsindent{2}{}\<[11]%
-\>[11]{}\Varid{f}\;(\Conid{Op}\;\text{\ttfamily \char34 *\char34})\;(\Varid{a},\Varid{b})\mathrel{=}\Varid{a}\plus \Varid{b}\plus [\mskip1.5mu \text{\ttfamily \char34 MULT\char34}\mskip1.5mu]{}\<[E]%
+\>[11]{}\Varid{f}\;(\Conid{Op}\;\text{\ttfamily \char34 *\char34})\;(\Varid{a},\Varid{b})\mathrel{=}\Varid{a}\plus \Varid{b}\plus [\mskip1.5mu \text{\ttfamily \char34 MUL\char34}\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-
 \subsection*{Problema 2}
-
+\subsubsection*{Triologia ana-cata-hilo}
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{inL2D}\mathbin{::}\Varid{a}+(\Varid{b},(\Conid{X}\;\Varid{a}\;\Varid{b},\Conid{X}\;\Varid{a}\;\Varid{b}))\to \Conid{X}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
@@ -1883,11 +1958,62 @@ outras funções auxiliares que sejam necessárias.
 \\[\blanklineskip]%
 \>[B]{}\Varid{anaL2D}\;\Varid{g}\mathrel{=}\Varid{inL2D}\comp (\Varid{recL2D}\;(\Varid{anaL2D}\;\Varid{g}))\comp \Varid{g}{}\<[E]%
 \\[\blanklineskip]%
+\>[B]{}\Varid{hyloL2D}\;\Varid{f}\;\Varid{g}\mathrel{=}\Varid{cataL2D}\;\Varid{f}\comp \Varid{anaL2D}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{CollectLeafs}
+Esta função transforma um L2D numa lista com todas as \ensuremath{\Conid{Unids}} da mesma.
+Bastou definir um catamorfismo que guardasse na lista cada \ensuremath{\Conid{Unid}}.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{X}\;\Conid{A}\;\Conid{B}}
+           \ar[d]_-{\ensuremath{\cata{\alt{\Varid{singl}}{\uncurry{\Varid{f}}}}}}
+           \ar[r]^-{\ensuremath{\Varid{outL2D}}}
+&
+    \ensuremath{\Conid{A}\mathbin{+}(\Conid{B}\times{(\Conid{X}\;\Conid{A}\;\Conid{B})}^{\mathrm{2}})}
+           \ar[d]^-{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{\cata{\alt{\Varid{singl}}{\uncurry{\Varid{f}}}}}^{\mathrm{2}})}}
+\\
+     \ensuremath{{\Conid{A}}^{\mathbin{*}}}
+&
+     \ensuremath{\Conid{A}\mathbin{+}(\Conid{B}\times{({\Conid{A}}^{\mathbin{*}})}^{\mathrm{2}})}
+           \ar[l]^-{\ensuremath{\alt{\Varid{singl}}{\uncurry{\Varid{f}}}}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{collectLeafs}\mathrel{=}\Varid{cataL2D}\;\alt{\Varid{singl}}{\uncurry{\Varid{f}}}{}\<[E]%
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
 \>[9]{}\mathbf{where}\;\Varid{f}\;\Varid{b}\;(\Varid{x},\Varid{y})\mathrel{=}\Varid{x}\plus \Varid{y}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Dimen}
+Calcula a dimensão de um \ensuremath{\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}} com um simples catamorfismo que
+vai calculando as dimensões das subagregações.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{X}\;\Conid{A}\;\Conid{B}}
+           \ar[d]_-{\ensuremath{\cata{\alt{\Varid{f}\comp \p1}{(\uncurry{\uncurry{\Varid{g}}})}}}}
+           \ar[r]^-{\ensuremath{\Varid{outL2D}}}
+&
+    \ensuremath{\Conid{A}\mathbin{+}(\Conid{B}\times{(\Conid{X}\;\Conid{A}\;\Conid{B})}^{\mathrm{2}})}
+           \ar[d]^-{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{\cata{\alt{\Varid{f}\comp \p1}{(\uncurry{\uncurry{\Varid{g}}})}}}^{\mathrm{2}})}}
+\\
+     \ensuremath{\Conid{Float}\times\Conid{Float}}
+&
+     \ensuremath{\Conid{A}\mathbin{+}(\Conid{B}\times{(\Conid{Float}\times\Conid{Float})}^{\mathrm{2}})}
+           \ar[l]^-{\ensuremath{\alt{\Varid{f}\comp \p1}{(\uncurry{\uncurry{\Varid{g}}})}}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{dimen}\mathbin{::}\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}\to (\Conid{Float},\Conid{Float}){}\<[E]%
 \\
 \>[B]{}\Varid{dimen}\mathrel{=}\Varid{cataL2D}\;\alt{\Varid{f}\comp \p1}{(\uncurry{\cdot }\comp \uncurry{\cdot }\mathbin{\$}\Varid{g})\comp \Varid{assocl}}{}\<[E]%
@@ -1915,7 +2041,31 @@ outras funções auxiliares que sejam necessárias.
 \\
 \>[7]{}\hsindent{2}{}\<[9]%
 \>[9]{}\Varid{f}\;(\Varid{x},\Varid{y})\mathrel{=}(\Varid{fromIntegral}\;\Varid{x},\Varid{fromIntegral}\;\Varid{y}){}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Calcula Origens}
+Calcula as origens para cada caixa consoante o tipo de agregação e a origem inicial.
+No final agrupa todas as caixas e as respetivas origens no tipo \ensuremath{\Conid{X}\;(\Conid{Caixa},\Conid{Origem})\;()}.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{X}\;(\Conid{Caixa}\times\Conid{Origem})\;()}
+&
+    \ensuremath{(\Conid{Caixa}\times\Conid{Origem})\mathbin{+}(()\times{(\Conid{X}\;(\Conid{Caixa}\times\Conid{Origem})\;())}^{\mathrm{2}})}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
+\\
+     \ensuremath{\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}\times\Conid{Origem}}
+           \ar[r]_-{\ensuremath{\Varid{f}}}
+           \ar[u]^-{\ensuremath{\ana{\Varid{f}}}}
+&
+     \ensuremath{(\Conid{Caixa}\times\Conid{Origem})\mathbin{+}(()\times{(\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}\times\Conid{Origem})}^{\mathrm{2}})}
+           \ar[u]_-{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{(\ana{\Varid{f}})}^{\mathrm{2}})}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{calcOrigins}\mathbin{::}((\Conid{X}\;\Conid{Caixa}\;\Conid{Tipo}),\Conid{Origem})\to \Conid{X}\;(\Conid{Caixa},\Conid{Origem})\;(){}\<[E]%
 \\
 \>[B]{}\Varid{calcOrigins}\mathrel{=}\Varid{anaL2D}\;\Varid{f}{}\<[E]%
@@ -1942,14 +2092,44 @@ outras funções auxiliares que sejam necessárias.
 \>[B]{}\Varid{calc}\;\Conid{Vd}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x}\mathbin{+}\Varid{a},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
 \\
 \>[B]{}\Varid{calc}\;\Conid{Ve}\;(\Varid{x},\Varid{y})\;(\Varid{a},\Varid{b})\mathrel{=}(\Varid{x},\Varid{y}\mathbin{+}\Varid{b}){}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Agrupa Caixas}
+Função que constroi uma figura, ou seja, cria uma lista com o par \ensuremath{(\Conid{Origem},\Conid{Caixa})} a partir de um \ensuremath{\Conid{X}\;(\Conid{Caixa},\Conid{Origem})\;()}
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{X}\;(\Conid{Caixa}\times\Conid{Origem})\;()}
+           \ar[d]_-{\ensuremath{\cata{\alt{\Varid{singl}\comp \Varid{swap}}{\uncurry{\Varid{f}}}}}}
+           \ar[r]^-{\ensuremath{\Varid{outL2D}}}
+&
+    \ensuremath{(\Conid{Caixa}\times\Conid{Origem})\mathbin{+}(()\times{(\Conid{X}\;(\Conid{Caixa}\times\Conid{Origem})\;())}^{\mathrm{2}})}
+           \ar[d]^-{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\times{\cata{\alt{\Varid{singl}\comp \Varid{swap}}{\uncurry{\Varid{f}}}}}^{\mathrm{2}})}}
+\\
+     \ensuremath{\Conid{Fig}}
+&
+     \ensuremath{(\Conid{Caixa}\times\Conid{Origem})\mathbin{+}(()\times{\Conid{Fig}}^{\mathrm{2}})}
+           \ar[l]^-{\ensuremath{\alt{\Varid{singl}\comp \Varid{swap}}{\uncurry{\Varid{f}}}}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{agrup\char95 caixas}\mathbin{::}\Conid{X}\;(\Conid{Caixa},\Conid{Origem})\;()\to \Conid{Fig}{}\<[E]%
 \\
 \>[B]{}\Varid{agrup\char95 caixas}\mathrel{=}\Varid{cataL2D}\;\alt{\Varid{singl}\comp \Varid{swap}}{\uncurry{\Varid{f}}}{}\<[E]%
 \\
 \>[B]{}\hsindent{15}{}\<[15]%
 \>[15]{}\mathbf{where}\;\Varid{f}\;\Varid{b}\;(\Varid{x},\Varid{y})\mathrel{=}\Varid{x}\plus \Varid{y}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Funções para teste}
+As funções \ensuremath{\Varid{caixasAndOrigin2Pict}} e \ensuremath{\Varid{mostra\char95 caixas}} servem para testar as nossas funções anteriores,
+visto transformam as caixas numa \ensuremath{\Conid{Picture}} e dão display dessa mesma \ensuremath{\Conid{Picture}}, respetivamente.
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{caixasAndOrigin2Pict}\mathrel{=}\Varid{\Conid{G}.pictures}\comp \map \;\uncurry{\Varid{f}}\comp \Varid{collectLeafs}\comp \Varid{calcOrigins}{}\<[E]%
 \\
 \>[B]{}\hsindent{15}{}\<[15]%
@@ -1965,6 +2145,30 @@ outras funções auxiliares que sejam necessárias.
 \end{hscode}\resethooks
 
 \subsection*{Problema 3}
+O problema 3 consistia em implementar a função cos' x n que dá a série de Taylor da função cosseno.
+Para construir o ciclo-for foram encontras as seguintes funções:
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{e}\;\Varid{x}\;\mathrm{0}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[B]{}\Varid{e}\;\Varid{x}\;(\Varid{n}\mathbin{+}\mathrm{1})\mathrel{=}\Varid{e}\;\Varid{x}\;\Varid{n}\mathbin{+}\Varid{h}\;\Varid{x}\;\Varid{n}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{h}\;\Varid{x}\;\mathrm{0}\mathrel{=}\mathbin{-}{\Varid{x}}^{\mathrm{2}}\mathbin{/}\mathrm{2}{}\<[E]%
+\\
+\>[B]{}\Varid{h}\;\Varid{x}\;(\Varid{n}\mathbin{+}\mathrm{1})\mathrel{=}\Varid{h}\;\Varid{x}\;\Varid{n}\mathbin{*}(\mathbin{-}{\Varid{x}}^{\mathrm{2}}\mathbin{/}\Varid{s}\;\Varid{n}){}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{s}\;\mathrm{0}\mathrel{=}\mathrm{12}{}\<[E]%
+\\
+\>[B]{}\Varid{s}\;(\Varid{n}\mathbin{+}\mathrm{1})\mathrel{=}\Varid{s}\;\Varid{n}\mathbin{+}\Varid{p}\;\Varid{n}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{p}\;\mathrm{0}\mathrel{=}\mathrm{18}{}\<[E]%
+\\
+\>[B]{}\Varid{p}\;(\Varid{n}\mathbin{+}\mathrm{1})\mathrel{=}\Varid{p}\;\Varid{n}\mathbin{+}\mathrm{8}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
 Solução:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1982,9 +2186,30 @@ Solução:
 \>[4]{}\Varid{prj}\;(\Varid{e},\Varid{h},\Varid{s},\Varid{p})\mathrel{=}\Varid{e}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-
+\subsubsection*{Valorização:}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{double}\;\Varid{cos'}\;(\Varid{double}\;\Varid{x},\Varid{int}\;\Varid{n})\;\{\mskip1.5mu {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{double}\;\Varid{e},\Varid{h},\Varid{s},\Varid{p};{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{e}\mathrel{=}\mathrm{1};\Varid{h}\mathrel{=}((\mathbin{-}\Varid{x}\mathbin{\uparrow}\mathrm{2})\mathbin{/}\mathrm{2});\Varid{s}\mathrel{=}\mathrm{12};\Varid{p}\mathrel{=}\mathrm{18};\Varid{int}\;\Varid{i};{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\for{\Varid{i}\mathrel{=}\mathrm{0};\Varid{i}\mathbin{<}\Varid{n};\Varid{i}\plus }\ {\{\mskip1.5mu \Varid{e}\mathrel{=}\Varid{e}\mathbin{+}\Varid{h};\Varid{h}\mathrel{=}\Varid{h}\mathbin{*}((\mathbin{-}\Varid{x}\mathbin{\uparrow}\mathrm{2})\mathbin{/}\Varid{s});\Varid{s}\mathrel{=}\Varid{s}\mathbin{+}\Varid{p};\Varid{p}\mathrel{=}\Varid{p}\mathbin{+}\mathrm{8};\mskip1.5mu\}}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{return}\;\Varid{e};{}\<[E]%
+\\
+\>[B]{}\mskip1.5mu\}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
 \subsection*{Problema 4}
-Triologia ``ana-cata-hilo":
+\subsubsection*{Triologia ana-cata-hilo}
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -2007,19 +2232,73 @@ Triologia ``ana-cata-hilo":
 \>[B]{}\Varid{hyloFS}\;\Varid{g}\;\Varid{h}\mathrel{=}\Varid{cataFS}\;\Varid{h}\comp \Varid{anaFS}\;\Varid{g}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-Outras funções pedidas:
+\subsubsection*{Diagrama geral do cataFS}
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[d]_-{\ensuremath{\cata{\Varid{g}}}}
+           \ar[r]^-{\ensuremath{\Varid{outFS}}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[d]^-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\cata{\Varid{g}}))}}
+\\
+     \ensuremath{\Conid{T}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{T}))}^{\mathbin{*}}}
+           \ar[l]^-{\ensuremath{\Varid{g}}}
+}
+\end{eqnarray*}
+
+\subsubsection*{Check}
+Verifica a integridade do \ensuremath{\Varid{file}\;\Varid{system}}, ou seja, em cada diretoria não podem haver ficheiros
+ou diretorias com os mesmos identificadores. Para isso basta fazer um catamorfismo
+e verificar a integridade de cada sub-diretoria.
+\begin{eqnarray*}
+\xymatrix@C=8cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[d]_-{\ensuremath{\cata{\Varid{f}}}}
+           \ar[r]^-{\ensuremath{\Varid{outFS}}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[d]^-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\cata{\Varid{f}}))}}
+\\
+     \ensuremath{\Conid{Bool}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{Bool}))}^{\mathbin{*}}}
+           \ar[l]^-{\ensuremath{\Varid{f}\mathrel{=}\uncurry{(\mathrel{\wedge})}\comp (\Varid{nr}\times\Varid{and})\comp \conj{\map \;\p1}{\map \;(\alt{\Varid{true}}{\Varid{id}}\comp \p2)}}}
+}
+\end{eqnarray*}
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{check}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Conid{Bool}{}\<[E]%
 \\
 \>[B]{}\Varid{check}\mathrel{=}\Varid{cataFS}\mathbin{\$}\uncurry{(\mathrel{\wedge})}\comp (\Varid{nr}\times\Varid{and})\comp \conj{\map \;\p1}{\map \;(\alt{\Varid{true}}{\Varid{id}}\comp \p2)}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Tar}
+Recolhe todos os conteudos de ficheiros de um \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}} e liga-os aos seus \ensuremath{\Varid{path}}.
+Com um catamorfismo torna-se simples percorrendo todas as sub-diretorias e guardando-o num par \ensuremath{\Conid{Path}\times\Conid{Conteudo}}.
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[d]_-{\ensuremath{\cata{\Varid{concat}\comp (\map \;\Varid{caminhos})}}}
+           \ar[r]^-{\ensuremath{\Varid{outFS}}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[d]^-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\cata{\Varid{concat}\comp (\map \;\Varid{caminhos})}))}}
+\\
+     \ensuremath{{(\Conid{Path}\;\Conid{A}\times\Conid{B})}^{\mathbin{*}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}{(\Conid{Path}\;\Conid{A}\times\Conid{B})}^{\mathbin{*}}))}^{\mathbin{*}}}
+           \ar[l]^-{\ensuremath{\Varid{concat}\comp (\map \;\Varid{caminhos})}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{tar}\mathbin{::}\Conid{FS}\;\Varid{a}\;\Varid{b}\to [\mskip1.5mu (\Conid{Path}\;\Varid{a},\Varid{b})\mskip1.5mu]{}\<[E]%
 \\
 \>[B]{}\Varid{tar}\mathrel{=}\Varid{cataFS}\mathbin{\$}\Varid{concat}\comp (\map \;\Varid{caminhos}){}\<[E]%
@@ -2033,7 +2312,33 @@ Outras funções pedidas:
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
 \>[9]{}\Varid{caminhos}\;(\Varid{a},i_1\;\Varid{f})\mathrel{=}[\mskip1.5mu ([\mskip1.5mu \Varid{a}\mskip1.5mu],\Varid{f})\mskip1.5mu]{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Untar}
+Reverte a função \ensuremath{\Varid{tar}}, ou seja, a partir de uma lista com \ensuremath{(\Conid{Path}\times\Conid{Conteudo})} cria um \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}.
+Sendo um inverso da função \ensuremath{\Varid{tar}} que utiliza um catamorfismo, então há a possibilidade
+de resolver este problema com um anamorfismo. Foi essa a nossa estratrégia, definimos um anamorfismo
+que percorre a lista \ensuremath{(\Conid{Path}\times\Conid{Conteudo})} e vai criando as diretorias ou ficheiros correspondes,
+originando no final um \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}.
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
+\\
+     \ensuremath{{(\Conid{Path}\;\Conid{A}\times\Conid{B})}^{\mathbin{*}}}
+           \ar[u]^-{\ensuremath{\ana{\map \;\Varid{travessia}}}}
+           \ar[r]_-{\ensuremath{\map \;\Varid{travessia}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}{(\Conid{Path}\;\Conid{A}\times\Conid{B})}^{\mathbin{*}}))}^{\mathbin{*}}}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\ana{\Varid{travessia}}))}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{untar}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu (\Conid{Path}\;\Varid{a},\Varid{b})\mskip1.5mu]\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
 \>[B]{}\Varid{untar}\mathrel{=}\Varid{joinDupDirs}\comp \Varid{anaFS}\;(\map \;\Varid{travessia}){}\<[E]%
@@ -2043,7 +2348,38 @@ Outras funções pedidas:
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
 \>[9]{}\Varid{travessia}\;(\Varid{a},\Varid{b})\mathrel{=}\mathbf{if}\;\length \;\Varid{a}\mathbin{>}\mathrm{1}\;\mathbf{then}\;(\Varid{head}\;\Varid{a},i_2\;[\mskip1.5mu (\Varid{tail}\;\Varid{a},\Varid{b})\mskip1.5mu])\;\mathbf{else}\;(\Varid{head}\;\Varid{a},i_1\;\Varid{b}){}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Find}
+Esta função consiste em juntar os \ensuremath{\Varid{paths}} (i.e caminhos) até a ficheiros com um certo identificador.
+Para isso definimos um hilomorfismo, onde primeiramente filtramos o \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}} onde eliminamos
+todos os ficheiros que não têm esse identificador e, mais tarde, juntamos os \ensuremath{\Varid{paths}} todos numa lista.
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{{\Conid{Path}\;\Conid{A}}^{\mathbin{*}}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}{\Conid{Path}\;\Conid{A}}^{\mathbin{*}}))}^{\mathbin{*}}}
+           \ar[l]_-{\ensuremath{\Varid{paths}}}
+\\
+     \ensuremath{\Conid{FS}\;\Varid{a}\;\Varid{b}}
+           \ar[u]^-{\ensuremath{\cata{\Varid{paths}}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\cata{\Varid{paths}}))}}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
+\\
+     \ensuremath{(\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B})}
+           \ar[u]^-{\ensuremath{\ana{\Varid{filtraFS}}}}
+           \ar[r]_-{\ensuremath{\Varid{filtraFS}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}(\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B})))}^{\mathbin{*}}}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\ana{\Varid{filtraFS}}))}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{find}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to [\mskip1.5mu \Conid{Path}\;\Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[B]{}\Varid{find}\mathrel{=}\Varid{curry}\mathbin{\$}\Varid{hyloFS}\;\Varid{filtraFS}\;\Varid{paths}{}\<[E]%
@@ -2071,101 +2407,263 @@ Outras funções pedidas:
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
 \>[9]{}\Varid{organize}\;(\Varid{a},i_2\;\Varid{p})\mathrel{=}\map \;((\Varid{curry}\;\Varid{cons}\;\Varid{a}))\;\Varid{p}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{New}
+Esta função é equivalente ao comando bash \ensuremath{\Varid{touch}}, que corresponde à criação
+de um ficheiro na diretoria que lhe é enviada como argumento. Foi definido um
+anamorfismo que itera sobre o \ensuremath{\Conid{File}\;\Conid{System}} e procura o \ensuremath{\Varid{path}} correspondente,
+mantendo a integridade dos outros ficheiros/diretorias. Quando chega à diretoria
+onde vai criar o novo ficheiro (i.e. \ensuremath{\length \;(\Conid{Path}\;\Conid{A})\equiv \mathrm{1}}), então cria o ficheiro
+e continua a iterar sobre o resto do \ensuremath{\Conid{File}\;\Conid{System}} não perder ficheiros/diretorias
+respetivamente ao \ensuremath{\Conid{File}\;\Conid{System}} recebido.
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
+\\
+     \ensuremath{(\Conid{Path}\;\Conid{A}\times\Conid{B})\times\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[u]^-{\ensuremath{\ana{\Varid{f}}}}
+           \ar[r]_-{\ensuremath{\Varid{f}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}((\Conid{Path}\;\Conid{A}\times\Conid{B})\times\Conid{FS}\;\Conid{A}\;\Conid{B})))}^{\mathbin{*}}}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\ana{\Varid{f}}))}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{new}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Path}\;\Varid{a}\to \Varid{b}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
 \>[B]{}\Varid{new}\mathrel{=}\Varid{curry}\comp \Varid{curry}\mathbin{\$}{}\<[24]%
-\>[24]{}\Varid{anaFS}\mathbin{\$}\Varid{f}{}\<[E]%
+\>[24]{}\Varid{anaFS}\;{}\<[31]%
+\>[31]{}\Varid{f}\;\mathbf{where}{}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\mathbf{where}{}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{f}{}\<[10]%
+\>[10]{}\mathrel{=}\Varid{cond}\;\Varid{maior}\;\uncurry{\Varid{goForward}}\;(\Varid{cond}\;\Varid{igual}\;\uncurry{\Varid{newFile}}\;\uncurry{\Varid{notHere}}){}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{f}{}\<[12]%
-\>[12]{}\mathrel{=}\Varid{cond}\;\Varid{maior}\;(\uncurry{\cdot }\mathbin{\$}\Varid{goForward})\;(\Varid{cond}\;\Varid{igual}\;(\uncurry{\cdot }\mathbin{\$}\Varid{newFile})\;(\uncurry{\cdot }\mathbin{\$}\Varid{notHere})){}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{goForward}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{progresso}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{goForward}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{progresso}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{progresso}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{i},i_1\;\Varid{f}){}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{progresso}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{i},i_1\;\Varid{f}){}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{progresso}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{Dir}\;\Varid{d})\mathrel{=}\mathbf{if}\;(\Varid{head}\;\Varid{a}\equiv \Varid{i})\;\mathbf{then}\;(\Varid{i},i_2\;((\Varid{tail}\;\Varid{a},\Varid{b}),\Varid{d}))\;\mathbf{else}\;(\Varid{i},i_2\;(([\mskip1.5mu \mskip1.5mu],\Varid{b}),\Varid{d})){}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{progresso}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{Dir}\;\Varid{d})\mathrel{=}\mathbf{if}\;(\Varid{head}\;\Varid{a}\equiv \Varid{i})\;\mathbf{then}\;(\Varid{i},i_2\;((\Varid{tail}\;\Varid{a},\Varid{b}),\Varid{d}))\;\mathbf{else}\;(\Varid{i},i_2\;(([\mskip1.5mu \mskip1.5mu],\Varid{b}),\Varid{d})){}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{newFile}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}(\Varid{curry}\;\mathsf{conc})\;[\mskip1.5mu (\Varid{head}\;\Varid{a},i_1\;\Varid{b})\mskip1.5mu]\mathbin{\$}\map \;(\Varid{endOfPath}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{newFile}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}(\Varid{curry}\;\mathsf{conc})\;[\mskip1.5mu (\Varid{head}\;\Varid{a},i_1\;\Varid{b})\mskip1.5mu]\mathbin{\$}\map \;(\Varid{endOfPath}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{notHere}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{endOfPath}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{notHere}\;(\Varid{a},\Varid{b})\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{endOfPath}\;(\Varid{a},\Varid{b}))\;\Varid{l}{}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{endOfPath}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{i},i_1\;\Varid{f}){}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{endOfPath}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{File}\;\Varid{f})\mathrel{=}(\Varid{i},i_1\;\Varid{f}){}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{endOfPath}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{Dir}\;\Varid{d})\mathrel{=}(\Varid{i},i_2\;(([\mskip1.5mu \mskip1.5mu],\Varid{b}),\Varid{d})){}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{endOfPath}\;(\Varid{a},\Varid{b})\;(\Varid{i},\Conid{Dir}\;\Varid{d})\mathrel{=}(\Varid{i},i_2\;(([\mskip1.5mu \mskip1.5mu],\Varid{b}),\Varid{d})){}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{maior}\mathrel{=}(\mathbin{>}\mathrm{1})\comp \length \comp \p1\comp \p1{}\<[E]%
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{maior}\mathrel{=}(\mathbin{>}\mathrm{1})\comp \length \comp \p1\comp \p1{}\<[E]%
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{igual}\mathrel{=}(\equiv \mathrm{1})\comp \length \comp \p1\comp \p1{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Questão:}
+A propriedade \ensuremath{\Varid{check}} não permite que diretorias e ficheiros tenham o mesmo nome, já a \ensuremath{\Conid{CheckFile}} permite, representando a realidade, logo, se tentarmos criar um ficheiro com o mesmo nome da diretoria, a \ensuremath{\Varid{check}} invalidava a propriedade.
+\subsubsection*{Copy}
+Esta função é equivalente ao comando bash \ensuremath{\Varid{cp}}, que corresponde à criação
+de um ficheiro a partir de outro já existente. Sendo assim foi necessário usar
+um anamorfismo para ir buscar o conteudo do ficheiro que queremos copiar, e depois
+foi aproveitada a função \ensuremath{\Varid{new}} para criar um novo ficheiro com o mesmo conteudo do anterior
+mas no \ensuremath{\Varid{path}} recebido como argumento. Então a estratégia do anamorfismo foi filtrar tudo
+o que não pertencia ao \ensuremath{\Conid{Path}\;\Conid{A}} recebido como argumento, no final obtemos um \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}} com
+o ficheiro que queremos copiar, assim, basta apenas utilizar a função \ensuremath{\Varid{new}} e criar o novo ficheiro
+com o mesmo conteudo do filtrado no anamorfismo.
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
 \\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{igual}\mathrel{=}(\equiv \mathrm{1})\comp \length \comp \p1\comp \p1{}\<[E]%
-\\[\blanklineskip]%
+    \ensuremath{(\Conid{Path}\;\Conid{A}\times\Conid{B})\times\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[u]^-{\ensuremath{\uncurry{\uncurry{\Varid{new}}}}}
+\\
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[u]^-{\ensuremath{\conj{\conj{\p1\comp \p1}{\p2\comp \Varid{head}\comp \p2}}{\p2\comp \p1}}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
+\\
+     \ensuremath{\Conid{Path}\;\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[u]^-{\ensuremath{\ana{\Varid{g}}}}
+           \ar[r]_-{\ensuremath{\Varid{g}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}(\Conid{Path}\;\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B})))}^{\mathbin{*}}}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\ana{\Varid{g}}))}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{58}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{cp}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Path}\;\Varid{a}\to \Conid{Path}\;\Varid{a}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
-\>[B]{}\Varid{cp}\mathrel{=}{}\<[7]%
-\>[7]{}\Varid{curry}\comp \Varid{curry}\mathbin{\$}\Varid{f}{}\<[E]%
+\>[B]{}\Varid{cp}\mathrel{=}\Varid{curry}\comp \Varid{curry}\mathbin{\$}\Varid{f}\;\mathbf{where}{}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\mathbf{where}{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{f}\mathrel{=}\Varid{copiaFich}\comp \conj{\conj{\p2\comp \p1}{\p2}}{\Varid{conteudo}\comp \conj{\p1\comp \p1}{\p2}}{}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{f}\;((\Varid{a},\Varid{b}),\Varid{fs})\mathrel{=}\Varid{copiaFich}\;\Varid{a}\;\Varid{fs}\;(\Varid{conteudo}\;(\Varid{a},\Varid{fs})){}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{copiaFich}\mathrel{=}\Varid{cond}\;((\mathbin{>}\mathrm{0})\comp \length \comp \p2)\;(\uncurry{\uncurry{\Varid{new}}}\comp \conj{\conj{\p1\comp \p1}{\p2\comp \Varid{head}\comp \p2}}{\p2\comp \p1})\;(\p2\comp \p1)\comp (\Varid{id}\times\Varid{tar}){}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{copiaFich}\;\Varid{a}\;\Varid{fs}\;(\Conid{FS}\;\Varid{l})\mathrel{=}\mathbf{if}\;\length \;\Varid{l}\mathbin{>}\mathrm{0}\;\mathbf{then}\;\Varid{new}\;\Varid{a}\;((\lambda (\Conid{File}\;\Varid{b})\to \Varid{b})\comp \p2\mathbin{\$}\Varid{head}\;\Varid{l})\;\Varid{fs}\;\mathbf{else}\;\Varid{fs}{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{conteudo}\mathrel{=}\Varid{anaFS}\;\Varid{g}{}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{conteudo}\mathrel{=}\Varid{anaFS}\;\Varid{g}{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g}\mathrel{=}\Varid{cond}\;((\mathbin{>}\mathrm{1})\comp \length \comp \p1)\;\Varid{followPath}\;(\Varid{cond}\;((\equiv \mathrm{1})\comp \length \comp \p1)\;\Varid{encontrou}\;\Varid{nil})\comp (\Varid{id}\times\Varid{outFS}){}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{g}\mathrel{=}\Varid{cond}\;((\geq \mathrm{1})\comp \length \comp \p1)\;(\uncurry{\cdot }\mathbin{\$}\Varid{followPath})\;\Varid{nil}{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{followPath}\mathrel{=}\Varid{auxJoin}\comp \conj{\uncurry{(\Varid{filter}\comp \Varid{curry}\;\Varid{path})}}{\Varid{tail}\comp \p1}{}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{followPath}\;\Varid{a}\;(\Conid{FS}\;\Varid{l})\mathrel{=}\map \;(\Varid{transf}\;\Varid{a})\mathbin{\$}\Varid{filter}\;(\Varid{path}\;\Varid{a})\;\Varid{l}{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{path}\mathrel{=}\alt{\Varid{false}}{\uncurry{(\equiv )}\comp (\Varid{head}\times\p1)}{}\<[58]%
+\>[58]{}\comp \Varid{distr}\comp (\Varid{id}\times\Varid{distr}){}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{path}\;\Varid{p}\;(\Varid{a},\Varid{x})\mathrel{=}\Varid{head}\;\Varid{p}\equiv \Varid{a}{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{encontrou}\mathrel{=}\Varid{auxJoin}\comp \conj{\uncurry{(\Varid{filter}\comp \Varid{curry}\;\Varid{founded})}}{\Varid{tail}\comp \p1}{}\<[E]%
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{transf}\;\Varid{p}\;(\Varid{a},\Conid{File}\;\Varid{b})\mathrel{=}(\Varid{a},i_1\;\Varid{b}){}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{founded}\mathrel{=}\alt{\uncurry{(\equiv )}\comp (\Varid{head}\times\p1)}{\Varid{false}}\comp \Varid{distr}\comp (\Varid{id}\times\Varid{distr}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Remove}
+Esta função é equivalente ao comando bash \ensuremath{\Varid{rm}}, que corresponde à remoção de um
+ficheiro dado um determinado \ensuremath{\Varid{path}} (nota. esta função apenas elimina ficheiros!). Assim, foi
+definido um anamorfismo parecido com o \ensuremath{\Varid{new}}, de modo a que percorra o \ensuremath{\Conid{File}\;\Conid{System}}
+seguindo o \ensuremath{\Varid{path}} recebido como argumento e, no momento em que chega à diretoria onde
+se encontra o ficheiro em questão (i.e. \ensuremath{\length \;(\Conid{Path}\;\Conid{A})\equiv \mathrm{1}}), filtra todos os que têm identificador
+diferente do que queremos eliminar, assim, acabamos por eliminar o ficheiro que queriamos.
+Depois continuamos com a navegação nas sub-diretorias correspondentes para que não se perca
+ficheiros/diretorias relativamente ao \ensuremath{\Conid{File}\;\Conid{System}} recebido.
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{FS}\;\Conid{A}\;\Conid{B}}
+&
+    \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}\Conid{FS}\;\Conid{A}\;\Conid{B}))}^{\mathbin{*}}}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
 \\
-\>[7]{}\hsindent{2}{}\<[9]%
-\>[9]{}\Varid{transf}\;\Varid{p}\;(\Varid{a},\Conid{Dir}\;\Varid{fs})\mathrel{=}(\Varid{a},i_2\;(\Varid{tail}\;\Varid{p},\Varid{fs})){}\<[E]%
-\\[\blanklineskip]%
+     \ensuremath{\Conid{Path}\;\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[u]^-{\ensuremath{\ana{\Varid{f}}}}
+           \ar[r]_-{\ensuremath{\Varid{f}}}
+&
+     \ensuremath{{(\Conid{A}\times(\Conid{B}\mathbin{+}(\Conid{Path}\;\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B})))}^{\mathbin{*}}}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\ana{\Varid{f}}))}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{rm}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow (\Conid{Path}\;\Varid{a})\to (\Conid{FS}\;\Varid{a}\;\Varid{b})\to \Conid{FS}\;\Varid{a}\;\Varid{b}{}\<[E]%
 \\
-\>[B]{}\Varid{rm}\mathrel{=}\bot {}\<[E]%
-\\[\blanklineskip]%
+\>[B]{}\Varid{rm}\mathrel{=}\Varid{curry}\mathbin{\$}\Varid{anaFS}\;\Varid{f}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{f}\mathrel{=}\Varid{cond}\;\Varid{maior}\;\Varid{goForward}\;(\Varid{cond}\;\Varid{igual}\;\Varid{removeFile}\;\Varid{fimPath})\comp (\Varid{id}\times\Varid{outFS}){}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{goForward}\mathrel{=}\uncurry{(\map \comp (\Varid{curry}\;\Varid{progresso}))}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{progresso}\mathrel{=}\Varid{cond}\;(\uncurry{(\equiv )}\comp (\Varid{head}\times\p1))\;\Varid{goCase}\;\Varid{stopCase}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{goCase}\mathrel{=}(\Varid{id}\times(\p2+(\Varid{tail}\times\Varid{id})))\comp (\Varid{id}\times\Varid{distr}\comp \Varid{swap})\comp \Varid{assocr}\comp \Varid{swap}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{stopCase}\mathrel{=}(\Varid{id}\times(\Varid{id}+\conj{\Varid{nil}}{\Varid{id}}))\comp \p2{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{removeFile}\mathrel{=}\Varid{auxJoin}\comp \conj{\uncurry{(\Varid{filter}\comp \Varid{curry}\;\Varid{dif})}}{\Varid{nil}}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{dif}\mathrel{=}\alt{\uncurry{(\not\equiv )}\comp (\Varid{head}\times\p1)}{\Varid{true}}\comp \Varid{distr}\comp (\Varid{id}\times\Varid{distr}){}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{fimPath}\mathrel{=}\Varid{auxJoin}\comp (\Varid{id}\times\Varid{nil})\comp \Varid{swap}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{maior}\mathrel{=}(\mathbin{>}\mathrm{1})\comp \length \comp \p1{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{igual}\mathrel{=}(\equiv \mathrm{1})\comp \length \comp \p1{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\subsubsection*{Funções Auxiliares}
+A função \ensuremath{\Varid{auxJoin}} recebe um par com uma lista e um elemento, e junta esse elemento na
+direita de um Either, foi uma grande ajuda para quando navegamos pelas sub-diretorias.
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{auxJoin}\mathbin{::}([\mskip1.5mu (\Varid{a},\Varid{b}+\Varid{c})\mskip1.5mu],\Varid{d})\to [\mskip1.5mu (\Varid{a},\Varid{b}+(\Varid{d},\Varid{c}))\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\Varid{auxJoin}\mathrel{=}\bot {}\<[E]%
-\\[\blanklineskip]%
+\>[B]{}\Varid{auxJoin}\mathrel{=}\uncurry{(\Varid{flip}\;(\map \comp \Varid{curry}\;\Varid{g}))}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{g}\mathrel{=}(\Varid{id}\times\Varid{h})\comp \Varid{assocr}\comp \Varid{swap}{}\<[E]%
+\\
+\>[B]{}\hsindent{7}{}\<[7]%
+\>[7]{}\Varid{h}\mathrel{=}(\p1+\Varid{swap})\comp \Varid{distl}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsubsection*{Adicional: cFS2Exp}
+Converte um \ensuremath{\Conid{File}\;\Conid{System}} numa \ensuremath{\Conid{Exp}} para que depois possa ser utilizada a função \ensuremath{\Varid{dotFS}} para visualizar
+o \ensuremath{\Conid{File}\;\Conid{System}} em \graphviz{Graphviz}. Para isso, tal como diz no enunciado, foi utilizado
+anamorfismo em Exp que percorria o \ensuremath{\Conid{Fyle}\;\Conid{System}} e guardava em \ensuremath{\Conid{Terms}} os
+identificadores das diretorias/ficheiros.
+
+\begin{eqnarray*}
+\xymatrix@C=4cm{
+    \ensuremath{\Conid{Exp}\;()\;\Conid{A}}
+&
+    \ensuremath{()\mathbin{+}(\Conid{A}\times{(\Conid{Expr}\;()\;\Conid{A})}^{\mathbin{*}})}
+           \ar[l]_-{\ensuremath{\Varid{inFS}}}
+\\
+     \ensuremath{\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B}}
+           \ar[u]^-{\ensuremath{\ana{\Varid{g}}}}
+           \ar[r]_-{\ensuremath{\Varid{g}}}
+&
+     \ensuremath{()\mathbin{+}(\Conid{A}\times{(\Conid{A}\times\Conid{FS}\;\Conid{A}\;\Conid{B})}^{\mathbin{*}})}
+           \ar[u]_-{\ensuremath{\map \;(\Varid{id}\times(\Varid{id}\mathbin{+}\ana{\Varid{f}}))}}
+}
+\end{eqnarray*}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{cFS2Exp}\mathbin{::}\Varid{a}\to \Conid{FS}\;\Varid{a}\;\Varid{b}\to (\Conid{Exp}\;()\;\Varid{a}){}\<[E]%
 \\
-\>[B]{}\Varid{cFS2Exp}\mathrel{=}\Varid{curry}\mathbin{\$}\Varid{anaExp}\;\Varid{g}{}\<[E]%
+\>[B]{}\Varid{cFS2Exp}\mathrel{=}\Varid{curry}\;\Varid{f}\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\mathbf{where}{}\<[E]%
+\>[9]{}\Varid{f}\mathrel{=}\Varid{anaExp}\;\Varid{g}{}\<[E]%
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{g}\;(\Varid{a},\Conid{FS}\;\Varid{l})\mathrel{=}i_2\;(\Varid{a},\map \;(\Varid{leitura})\;\Varid{l}){}\<[E]%
+\>[9]{}\Varid{g}\mathrel{=}i_2\comp (\Varid{id}\times\map \;\Varid{leitura})\comp (\Varid{id}\times\Varid{outFS}){}\<[E]%
 \\
 \>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{leitura}\;(\Varid{a},\Conid{File}\;\Varid{b})\mathrel{=}(\Varid{a},\Conid{FS}\;[\mskip1.5mu \mskip1.5mu]){}\<[E]%
-\\
-\>[B]{}\hsindent{9}{}\<[9]%
-\>[9]{}\Varid{leitura}\;(\Varid{a},\Conid{Dir}\;\Varid{fs})\mathrel{=}(\Varid{a},\Varid{fs}){}\<[E]%
+\>[9]{}\Varid{leitura}\mathrel{=}\alt{\Varid{id}\times\Varid{inFS}\comp \Varid{nil}}{\Varid{id}}\comp \Varid{distr}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
